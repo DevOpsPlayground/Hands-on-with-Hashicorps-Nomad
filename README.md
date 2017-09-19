@@ -1,14 +1,31 @@
-# devops-playground
-test repo for the devops playground material
+# DevOps Playground - Nomad
 
-Set up 2 instances (1 server and 1 client)
+Nomad is a highly available, distributed, data-center aware cluster and application scheduler designed to support the modern datacenter with,
 
-run the bootstrap.
+  - support for long-running services
+  - batch jobs
+  - and much more
 
-Nomad Server:
+# Use Case:
 
-create the file server.hcl with nano or vi:
+In order for you to get in touch with nomad, we prepared a use case.
 
+In this use case you will:
+  - Set up a nomad server;
+  - Set up a client and connect it to a server;
+  - Execute a job;
+  - Check the result, allocation and status;
+  - Scale it up to cluster;
+  - Apply the cluster job;
+  - Check the result, allocation and status.
+
+### Installation
+
+All the AWS instances with nomad will be provided pre-configured.
+
+server.hcl file:
+
+```sh
 # Increase log verbosity
 log_level = "DEBUG"
 
@@ -22,9 +39,16 @@ server {
     # Self-elect, should be 3 or 5 for production
     bootstrap_expect = 1
 }
+```
 
-Nomad Client:
+Execute on the Nomad Server to start the server:
+```sh
+nomad agent -config server.hcl
+```
 
+client.hcl file:
+
+```sh
 # Increase log verbosity
 log_level = "DEBUG"
 
@@ -45,18 +69,24 @@ client {
 ports {
     http = 5656
 }
+```
 
-Nomad Server:
-nomad agent -config server.hcl
+Replace the SERVER_IP with the actual IP of the Nomad server
 
-Nomad Client:
+Execute on the Nomad Client to start the client:
+```sh
 nomad agent -config client.hcl
+```
 
+On the Nomad Server:
+```sh
+nomad init
+```
 
-On Nomad Server:
+This will generate the job example file.
 
-nomad init -> create example job file
-
+Edit the example.nomad and change the file to this and save as webapp.nomad:
+```sh
 job "webapp" {
   
   datacenters = ["dc1"]
@@ -130,19 +160,80 @@ job "webapp" {
     }
   }
 }
+```
 
+After the file is edited, just execute:
+
+```sh
 nomad run webapp.nomad
+```
 
+After the job is done, just go to the client and check for the docker containers running with:
 
+```sh
+docker ps
+```
+
+You can see the instance ip and port. Just copy and paste it in your browser and should be able to see a webpage.
+
+Check the status of the job:
+
+```sh
 nomad status webapp
+```
 
+Check the resource allocation:
+```sh
+nomad alloc-status ALLOC_ID
+```
 
-create 2 more instances
+### Cluster
 
-apply the same concept as before
+So far, we just had a server and a client but if we want to apply this to a enterprise level, we will have most likely clusters and we apply the job to a cluster and not to a single server.
 
-create cluster.nomad
+So, we will need 2 more instances.
 
+Apply the client.hcl as before:
+
+client.hcl file:
+
+```sh
+# Increase log verbosity
+log_level = "DEBUG"
+
+# Setup data dir
+data_dir = "/tmp/client1"
+
+# Enable the client
+client {
+    enabled = true
+
+    # For demo assume we are talking to server1. For production,
+    # this should be like "nomad.service.consul:4647" and a system
+    # like Consul used for service discovery.
+    servers = ["SERVER_IP:4647"]
+}
+
+# Modify our port to avoid a collision with server1
+ports {
+    http = 5656
+}
+```
+
+Execute on the Nomad Client to start the client:
+```sh
+nomad agent -config client.hcl
+```
+
+On the Nomad server, run the command to check for the clients:
+
+```sh
+nomad node-status
+```
+
+On the server, create the cluster.nomad job file:
+
+```sh
 job "cluster" {
   region = "global"
 
@@ -156,7 +247,7 @@ job "cluster" {
   }
 
   group "db" {
-    count = 1
+    count = 3
 
     restart {
       attempts = 10
@@ -202,7 +293,7 @@ job "cluster" {
     }
   }
   group "webs" {
-    count = 1
+    count = 3
 
     restart {
       # The number of attempts to run the job within the specified interval.
@@ -264,7 +355,7 @@ job "cluster" {
     }
   }
   group "elasticsearch" {
-    count = 1
+    count = 3
 
     restart {
       # The number of attempts to run the job within the specified interval.
@@ -326,20 +417,19 @@ job "cluster" {
     }
   }
 }
+```
 
+Run the cluster job:
+```sh
 nomad run cluster.nomad
+```
 
+Check the status of the job:
+```sh
 nomad status cluster
+```
 
-check allocation
-
-
-
-
-
-
-
-
-
-
-
+Check the resource allocation:
+```sh
+nomad alloc-status ALLOC_ID
+```
