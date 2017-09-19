@@ -122,7 +122,7 @@ Edit the example.nomad and change the file to this and save as webapp.nomad:
 ```sh
 job "webapp" {
   
-  datacenters = ["dc1"]
+  datacenters = ["DATACENTER"]
 
   type = "service"
 
@@ -158,7 +158,7 @@ job "webapp" {
       driver = "docker"
 
       config {
-        image = "seqvence/static-site"
+        image = "DOCKER_IMAGE"
       
         port_map {
             webapp = 80
@@ -194,6 +194,11 @@ job "webapp" {
   }
 }
 ```
+
+On the field ```datacenters = ["DATACENTER"]``` substitute the variable DATACENTER with the datacenter specified in the server.hcl. (if it wasn't changed, it is ```dc1```)
+
+
+On the field ```image = "DOCKER_IMAGE"``` substitute the variable DOCKER_IMAGE with the image we need to use to have the web application -> ```seqvence/static-site```
 
 After the file is edited, just execute:
 
