@@ -216,7 +216,7 @@ You can see the instance ip and port. Just copy and paste it in your browser and
 
 The result will be this page:
 
-[![N|Solid](http://training.play-with-docker.com/images/static.png)]
+[!Result](http://training.play-with-docker.com/images/static.png)
 
 
 Check the status of the job:
