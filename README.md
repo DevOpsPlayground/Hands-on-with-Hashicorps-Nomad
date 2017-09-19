@@ -258,6 +258,8 @@ ports {
 }
 ```
 
+On the field ```servers = ["SERVER_IP:4647"]```, just substitute the SERVER_IP with the actual Nomad server IP as been done before.
+
 Execute on the Nomad Client to start the client:
 ```sh
 nomad agent -config client.hcl
@@ -269,7 +271,210 @@ On the Nomad server, run the command to check for the clients:
 nomad node-status
 ```
 
-On the server, create the cluster.nomad job file:
+On the server, you have the webapp.nomad job file like this:
+
+```sh
+job "cluster" {
+  region = "global"
+
+  datacenters = ["dc1"]
+
+  type = "service"
+
+  update {
+    stagger = "10s"
+    max_parallel = 1
+  }
+
+  
+  group "webs" {
+    count = 3
+
+    restart {
+      # The number of attempts to run the job within the specified interval.
+      attempts = 10
+      interval = "5m"
+
+      # The "delay" parameter specifies the duration to wait before restarting
+      # a task after it has failed.
+      delay = "25s"
+
+     # The "mode" parameter controls what happens when a task has restarted
+     # "attempts" times within the interval. "delay" mode delays the next
+     # restart until the next interval. "fail" mode does not restart the task
+     # if "attempts" has been hit within the interval.
+      mode = "delay"
+    }
+
+    ephemeral_disk {
+      size = 300
+    }
+
+    task "webapp" {
+
+      driver = "docker"
+
+      config {
+        image = "seqvence/static-site"
+      
+        port_map {
+            webapp = 80
+        }
+      }
+
+      logs {
+        max_files     = 10
+        max_file_size = 15
+      }
+
+      resources {
+        cpu    = 500 # 500 MHz
+        memory = 256 # 256MB
+        network {
+          mbits = 10
+          port "webapp" {}
+        }
+      }
+
+      service {
+        name = "global-webapp-check"
+        tags = ["global", "webs"]
+        port = "webapp"
+        check {
+          name     = "alive"
+          type     = "tcp"
+          interval = "10s"
+          timeout  = "2s"
+        }
+      }
+    }
+  }
+}
+```
+
+Add the ```count = 3``` below the group for the job be scaled to 3 instances.
+
+And now we are adding two more services to the job, a database and a elasticsearch instance.
+
+Just add a database to the job file:
+
+```sh
+group "db" {
+    count = 3
+
+    restart {
+      attempts = 10
+      interval = "5m"
+      delay = "25s"
+      mode = "delay"
+    }
+
+    ephemeral_disk {
+      size = 300
+    }
+
+    task "redis" {
+      driver = "docker"
+
+      config {
+        image = "redis:3.2"
+        port_map {
+          db = 6379
+        }
+      }
+
+      resources {
+        cpu    = 500 # 500 MHz
+        memory = 256 # 256MB
+        network {
+          mbits = 10
+          port "db" {}
+        }
+      }
+
+      service {
+        name = "global-redis-check"
+        tags = ["global", "db"]
+        port = "db"
+        check {
+          name     = "alive"
+          type     = "tcp"
+          interval = "10s"
+          timeout  = "2s"
+        }
+      }
+    }
+  }
+```
+
+and add as well a elasticsearch service:
+
+```sh
+  group "elasticsearch" {
+    count = 3
+
+    restart {
+      # The number of attempts to run the job within the specified interval.
+      attempts = 10
+      interval = "5m"
+
+      # The "delay" parameter specifies the duration to wait before restarting
+      # a task after it has failed.
+      delay = "25s"
+
+     # The "mode" parameter controls what happens when a task has restarted
+     # "attempts" times within the interval. "delay" mode delays the next
+     # restart until the next interval. "fail" mode does not restart the task
+     # if "attempts" has been hit within the interval.
+      mode = "delay"
+    }
+
+    ephemeral_disk {
+      size = 300
+    }
+
+    task "webapp" {
+
+      driver = "docker"
+
+      config {
+        image = "elasticsearch"
+      
+        port_map {
+            elasticsearch = 9300
+        }
+      }
+
+      logs {
+        max_files     = 10
+        max_file_size = 15
+      }
+
+      resources {
+        cpu    = 500 # 500 MHz
+        memory = 256 # 256MB
+        network {
+          mbits = 10
+          port "elasticsearch" {}
+        }
+      }
+
+      service {
+        name = "global-elasticsearch-check"
+        tags = ["global", "elasticsearch"]
+        port = "elasticsearch"
+        check {
+          name     = "alive"
+          type     = "tcp"
+          interval = "10s"
+          timeout  = "2s"
+        }
+      }
+    }
+  }
+```
+
+After adding this, your file will look like this (in this case a new file was created and saved with the same cluster.nomad):
 
 ```sh
 job "cluster" {
@@ -392,7 +597,7 @@ job "cluster" {
       }
     }
   }
-  group "elasticsearch" {
+  group "es" {
     count = 3
 
     restart {
@@ -415,7 +620,7 @@ job "cluster" {
       size = 300
     }
 
-    task "webapp" {
+    task "elasticsearch" {
 
       driver = "docker"
 
@@ -456,6 +661,7 @@ job "cluster" {
   }
 }
 ```
+
 
 Run the cluster job:
 ```sh
