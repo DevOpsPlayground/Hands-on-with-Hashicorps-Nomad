@@ -21,9 +21,31 @@ In this use case you will:
 
 ### Installation
 
-All the AWS instances with nomad will be provided pre-configured.
+All the AWS instances with nomad will be provided pre-configured with nomad and docker.
 
-server.hcl file:
+You will need to SSH to the Nomad server and client assigned to you.
+
+With OSX/Linux:
+
+```sh
+ssh ec2-user@IP-ADDRESS -i KEY
+```
+
+With windows, use the putty tool.
+
+After you connect, type 
+```sh 
+nomad 
+``` 
+just to check if nomad is installed.
+
+If yes, we need to create the server.hcl file. For this we can use the nano text editor.
+
+```sh
+nano server.hcl
+```
+
+Content to put server.hcl file:
 
 ```sh
 # Increase log verbosity
@@ -37,16 +59,25 @@ server {
     enabled = true
 
     # Self-elect, should be 3 or 5 for production
-    bootstrap_expect = 1
+    bootstrap_expect = 3
 }
 ```
+
+On the field ```bootstrap_expect``` the current value is 3 since on production exists more than one nomad server. For this use case, put the value as 1 since we want our server to be the leader.
 
 Execute on the Nomad Server to start the server:
 ```sh
 nomad agent -config server.hcl
 ```
 
-client.hcl file:
+At this point you will need to exit your terminal and ssh again into the instance.
+
+Doing the same thing for the client, just 
+
+```sh
+nano client.hcl
+```
+Content of the client.hcl file:
 
 ```sh
 # Increase log verbosity
@@ -71,12 +102,14 @@ ports {
 }
 ```
 
-Replace the SERVER_IP with the actual IP of the Nomad server
+On the field ```servers = ["SERVER_IP:4647"]```, just substitute the SERVER_IP with the actual Nomad server IP.
 
 Execute on the Nomad Client to start the client:
 ```sh
 nomad agent -config client.hcl
 ```
+
+At this point you will need to exit your terminal and ssh again into the instance.
 
 On the Nomad Server:
 ```sh
