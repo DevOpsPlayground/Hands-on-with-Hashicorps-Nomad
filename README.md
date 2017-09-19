@@ -232,7 +232,7 @@ nomad alloc-status ALLOC_ID
 
 ### Cluster
 
-So far, we just had a server and a client but if we want to apply this to a enterprise level, we will have most likely clusters and we apply the job to a cluster and not to a single server.
+So far, we just had a server and a client but if we want to apply this to a enterprise level, we will have most likely clusters and we will apply the job to a cluster and not to a single server.
 
 So, we will need 2 more instances.
 
