@@ -214,6 +214,11 @@ docker ps
 
 You can see the instance ip and port. Just copy and paste it in your browser and should be able to see a webpage.
 
+The result will be this page:
+
+[![N|Solid](http://training.play-with-docker.com/images/static.png)]
+
+
 Check the status of the job:
 
 ```sh
