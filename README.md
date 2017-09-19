@@ -214,7 +214,7 @@ docker ps
 
 You can see the instance ip and port. Just copy and paste it in your browser and should be able to see a webpage.
 
-The result will be this page:
+The result will be a page like this:
 
 ![Result]
 (/images/static.png)
