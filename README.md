@@ -39,6 +39,12 @@ nomad
 ``` 
 to check if nomad is installed.
 
+To monitor our server and clients, lets use consul since it interacts automatically with Nomad:
+
+```sh
+docker run --net=host consul
+```
+
 If everything is ok, we need to create the server.hcl file. 
 For this we need to use a text editor. For this use case, we used nano.
 
