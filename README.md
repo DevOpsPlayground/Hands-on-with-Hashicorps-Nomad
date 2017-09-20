@@ -39,6 +39,13 @@ nomad
 ``` 
 to check if nomad is installed.
 
+
+Edit the /etc/sudoers file for nomad have sudo access.
+Change the line ```Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin```
+to 
+```Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin```
+
+
 To monitor our server and clients, lets use consul since it interacts automatically with Nomad:
 
 ```sh
