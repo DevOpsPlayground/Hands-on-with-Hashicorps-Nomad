@@ -31,15 +31,16 @@ With OSX/Linux:
 ssh ec2-user@IP-ADDRESS -i KEY
 ```
 
-With windows, use the putty tool.
+With windows, use the [Putty](https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.70-installer.msi) tool.
 
 After you connect, type 
 ```sh 
 nomad 
 ``` 
-just to check if nomad is installed.
+to check if nomad is installed.
 
-If yes, we need to create the server.hcl file. For this we can use the nano text editor.
+If everything is ok, we need to create the server.hcl file. 
+For this we need to use a text editor. For this use case, we used nano.
 
 ```sh
 nano server.hcl
@@ -63,7 +64,7 @@ server {
 }
 ```
 
-On the field ```bootstrap_expect``` the current value is 3 since on production exists more than one nomad server. For this use case, put the value as 1 since we want our server to be the leader.
+On the field ```bootstrap_expect``` the current value is 3 since on production exists more than one nomad server. For this use case, put the value as ```1``` since we need our server to be the leader.
 
 Execute on the Nomad Server to start the server:
 ```sh
@@ -72,7 +73,7 @@ nomad agent -config server.hcl
 
 At this point you will need to exit your terminal and ssh again into the instance.
 
-Doing the same thing for the client, just 
+Doing the same thing for the client,
 
 ```sh
 nano client.hcl
@@ -105,13 +106,15 @@ ports {
 On the field ```servers = ["SERVER_IP:4647"]```, just substitute the SERVER_IP with the actual Nomad server IP.
 
 Execute on the Nomad Client to start the client:
+
 ```sh
 nomad agent -config client.hcl
 ```
 
-At this point you will need to exit your terminal and ssh again into the instance.
+At this point, you will need to exit your terminal and ssh again into the instance.
 
 On the Nomad Server:
+
 ```sh
 nomad init
 ```
@@ -119,6 +122,7 @@ nomad init
 This will generate the job example file.
 
 Edit the example.nomad and change the file to this and save as webapp.nomad:
+
 ```sh
 job "webapp" {
   
@@ -134,18 +138,12 @@ job "webapp" {
   group "webs" {
 
     restart {
-      # The number of attempts to run the job within the specified interval.
+    
       attempts = 10
       interval = "5m"
 
-      # The "delay" parameter specifies the duration to wait before restarting
-      # a task after it has failed.
       delay = "25s"
 
-     # The "mode" parameter controls what happens when a task has restarted
-     # "attempts" times within the interval. "delay" mode delays the next
-     # restart until the next interval. "fail" mode does not restart the task
-     # if "attempts" has been hit within the interval.
       mode = "delay"
     }
 
@@ -214,7 +212,7 @@ docker ps
 
 You can see the instance ip and port. Just copy and paste it in your browser and should be able to see a webpage.
 
-The result will be a page like this:
+The result will be a page similar to this:
 
 ![Result]
 (/images/static.png)
@@ -232,9 +230,9 @@ nomad alloc-status ALLOC_ID
 
 ### Cluster
 
-So far, we just had a server and a client but if we want to apply this to a enterprise level, we will have most likely clusters and we will apply the job to a cluster and not to a single server.
+So far, we just had a server and a client as infrastruture but if we want to apply this to a bigger scale, we will have most likely clusters of servers and we will need to apply our jobs to clusters.
 
-So, we will need 2 more instances.
+So for this example, we will need 2 more instances to have a cluster of 3 instances.
 
 Apply the client.hcl as before:
 
@@ -296,18 +294,12 @@ job "cluster" {
     count = 3
 
     restart {
-      # The number of attempts to run the job within the specified interval.
+
       attempts = 10
       interval = "5m"
 
-      # The "delay" parameter specifies the duration to wait before restarting
-      # a task after it has failed.
       delay = "25s"
 
-     # The "mode" parameter controls what happens when a task has restarted
-     # "attempts" times within the interval. "delay" mode delays the next
-     # restart until the next interval. "fail" mode does not restart the task
-     # if "attempts" has been hit within the interval.
       mode = "delay"
     }
 
@@ -357,9 +349,9 @@ job "cluster" {
 }
 ```
 
-Add the ```count = 3``` below the group for the job be scaled to 3 instances.
+Add the ```count = 3``` below the group for the job tasks be scaled to 3 instances.
 
-And now we are adding two more services to the job, a database and a elasticsearch instance.
+Now we are adding two more services to the job, a database and a elasticsearch instance.
 
 Just add a database to the job file:
 
@@ -419,18 +411,12 @@ and add as well a elasticsearch service:
     count = 3
 
     restart {
-      # The number of attempts to run the job within the specified interval.
+
       attempts = 10
       interval = "5m"
 
-      # The "delay" parameter specifies the duration to wait before restarting
-      # a task after it has failed.
       delay = "25s"
 
-     # The "mode" parameter controls what happens when a task has restarted
-     # "attempts" times within the interval. "delay" mode delays the next
-     # restart until the next interval. "fail" mode does not restart the task
-     # if "attempts" has been hit within the interval.
       mode = "delay"
     }
 
@@ -544,18 +530,12 @@ job "cluster" {
     count = 3
 
     restart {
-      # The number of attempts to run the job within the specified interval.
+
       attempts = 10
       interval = "5m"
 
-      # The "delay" parameter specifies the duration to wait before restarting
-      # a task after it has failed.
       delay = "25s"
 
-     # The "mode" parameter controls what happens when a task has restarted
-     # "attempts" times within the interval. "delay" mode delays the next
-     # restart until the next interval. "fail" mode does not restart the task
-     # if "attempts" has been hit within the interval.
       mode = "delay"
     }
 
@@ -606,18 +586,12 @@ job "cluster" {
     count = 3
 
     restart {
-      # The number of attempts to run the job within the specified interval.
+
       attempts = 10
       interval = "5m"
 
-      # The "delay" parameter specifies the duration to wait before restarting
-      # a task after it has failed.
       delay = "25s"
 
-     # The "mode" parameter controls what happens when a task has restarted
-     # "attempts" times within the interval. "delay" mode delays the next
-     # restart until the next interval. "fail" mode does not restart the task
-     # if "attempts" has been hit within the interval.
       mode = "delay"
     }
 
