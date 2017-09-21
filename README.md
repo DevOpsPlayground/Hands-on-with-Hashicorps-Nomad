@@ -10,16 +10,25 @@ Nomad is a highly available, distributed, data-center aware cluster and applicat
 
 In order for you to get in touch with nomad, we prepared a use case.
 
-In this use case you will:
-  - Set up a nomad server;
-  - Set up a client and connect it to a server;
-  - Execute a job;
-  - Check the result, allocation and status;
-  - Scale it up to cluster;
-  - Apply the cluster job;
-  - Check the result, allocation and status.
+In this use case you will perform the following steps:
 
-### Installation
+  1. Set up our environment
+    1.1. Consul Server
+    1.2. Nomad Server
+    1.3. Nomad Client
+  2. Web APP Job
+    2.1. Generate job file
+    2.2. Update the job file
+    2.3. Run the job file
+    2.4. Check status and allocation
+  3. Cluster Job
+    3.1. Add one more instance
+    3.2. Update the job file
+    3.3. Run the job file
+    3.4. Check status and allocation
+
+
+## 1. Set up our environment
 
 All the AWS instances with nomad will be provided pre-configured with nomad and docker.
 
@@ -33,11 +42,7 @@ ssh ec2-user@IP-ADDRESS -i KEY
 
 With windows, use the [Putty](https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.70-installer.msi) tool.
 
-After you connect, type 
-```sh 
-nomad 
-``` 
-to check if nomad is installed.
+### 1.1. Consul Server
 
 To monitor our server and clients, lets use a consul server since it interacts automatically with Nomad:
 
@@ -50,6 +55,8 @@ You should get a page like this:
 
 ![consul]
 (/images/base_consul.png)
+
+### 1.2. Nomad Server
 
 Since our consul server is ok, we can now ssh into our Nomad server.
 SSH into the server and,
@@ -120,6 +127,8 @@ sudo nomad agent -config server.hcl
 ```
 
 At this point you will need to exit your terminal and ssh again into the instance.
+
+### 1.3. Nomad Client
 
 Doing the same thing for the client,
 
@@ -195,6 +204,10 @@ Now, we can go to the browser and check on consul for our nomad server and clien
 
 You can see the status of the server and the clients, check if they're responding correctly to the consul server and later on we will come back here to check the services running.
 
+## 2. Web APP Job
+
+### 2.1. Generate job file
+
 Let's go back to our Nomad Server and do:
 
 ```sh
@@ -202,6 +215,8 @@ sudo nomad init
 ```
 
 This will generate the job example file.
+
+### 2.2. Update the job file
 
 Edit the example.nomad and change the file to this and save as webapp.nomad:
 
@@ -280,6 +295,8 @@ On the field ```datacenters = ["DATACENTER"]``` substitute the variable DATACENT
 
 On the field ```image = "DOCKER_IMAGE"``` substitute the variable DOCKER_IMAGE with the image we need to use to have the web application -> ```seqvence/static-site```
 
+### 2.3. Run the job file
+
 After the file is edited, just execute:
 
 ```sh
@@ -299,6 +316,8 @@ The result will be a page similar to this:
 ![Result]
 (/images/static.png)
 
+### 2.4. Check status and allocation
+
 Check the status of the job:
 
 ```sh
@@ -310,9 +329,12 @@ Check the resource allocation:
 sudo nomad alloc-status ALLOC_ID
 ```
 
-### Cluster
+## 3. Cluster Job
 
 So far, we just had a server and a client as infrastruture but if we want to apply this to a bigger scale, we will have most likely clusters of servers and we will need to apply our jobs to clusters.
+
+
+### 3.1. Add one more instance
 
 So for this example, we will need 2 more instances to have a cluster of 3 instances.
 
@@ -368,6 +390,8 @@ On the Nomad server, run the command to check for the clients:
 ```sh
 sudo nomad node-status
 ```
+
+### 3.2. Update the job file
 
 On the server, you have the webapp.nomad job file like this:
 
@@ -736,11 +760,14 @@ job "cluster" {
 }
 ```
 
+### 3.3. Run the job file
 
 Run the cluster job:
 ```sh
 sudo nomad run cluster.nomad
 ```
+
+### 3.4. Check status and allocation
 
 Check the status of the job:
 ```sh
