@@ -12,7 +12,7 @@ In order for you to get in touch with nomad, we prepared a use case.
 
 In this use case you will perform the following steps:
 
-  1. Set up our environment
+  1. **Set up our environment**
 
     1.1. Consul Server
 
@@ -20,7 +20,7 @@ In this use case you will perform the following steps:
 
     1.3. Nomad Client
 
-  2. Web APP Job
+  2. **Web APP Job**
 
     2.1. Generate job file
 
@@ -30,14 +30,14 @@ In this use case you will perform the following steps:
 
     2.4. Check status and allocation
 
-  3. Cluster Job
+  3. **Cluster Job**
 
     3.1. Add one more instance
 
     3.2. Update the job file
 
     3.3. Run the job file
-    
+
     3.4. Check status and allocation
 
 
