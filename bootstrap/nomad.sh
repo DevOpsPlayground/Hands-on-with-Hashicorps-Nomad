@@ -9,8 +9,3 @@ curl -O https://releases.hashicorp.com/nomad/0.6.3/nomad_0.6.3_linux_amd64.zip
 unzip nomad_0.6.3_linux_amd64.zip
 rm -f nomad_0.6.3_linux_amd64.zip
 mv nomad /usr/local/bin
-
-curl -O https://releases.hashicorp.com/consul/0.8.5/consul_0.8.5_linux_amd64.zip
-unzip consul_0.8.5_linux_amd64.zip
-rm -f consul_0.8.5_linux_amd64.zip
-mv consul /usr/local/bin
