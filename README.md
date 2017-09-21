@@ -1,5 +1,8 @@
 # DevOps Playground - Nomad
 
+![Nomad]
+(https://hyzxph.media.zestyio.com/blog-nomad-list.svg)
+
 What is Nomad? 
 
 Nomad is a tool for managing highly available and distributed clusters and applications running on the clusters. You can declare your jobs to be run on the clusters, deploy applications and monitor their progress.
