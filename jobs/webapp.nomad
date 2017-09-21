@@ -1,6 +1,6 @@
 job "webapp" {
-  
-  datacenters = ["dc1"]
+
+  datacenters = ["DATACENTER"]
 
   type = "service"
 
@@ -12,18 +12,12 @@ job "webapp" {
   group "webs" {
 
     restart {
-      # The number of attempts to run the job within the specified interval.
+
       attempts = 10
       interval = "5m"
 
-      # The "delay" parameter specifies the duration to wait before restarting
-      # a task after it has failed.
       delay = "25s"
 
-     # The "mode" parameter controls what happens when a task has restarted
-     # "attempts" times within the interval. "delay" mode delays the next
-     # restart until the next interval. "fail" mode does not restart the task
-     # if "attempts" has been hit within the interval.
       mode = "delay"
     }
 
@@ -36,8 +30,8 @@ job "webapp" {
       driver = "docker"
 
       config {
-        image = "seqvence/static-site"
-      
+        image = "DOCKER_IMAGE"
+
         port_map {
             webapp = 80
         }

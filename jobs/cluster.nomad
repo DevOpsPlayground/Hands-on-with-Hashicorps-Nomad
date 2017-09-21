@@ -11,7 +11,7 @@ job "cluster" {
   }
 
   group "db" {
-    count = 1
+    count = 3
 
     restart {
       attempts = 10
@@ -57,21 +57,15 @@ job "cluster" {
     }
   }
   group "webs" {
-    count = 1
+    count = 3
 
     restart {
-      # The number of attempts to run the job within the specified interval.
+
       attempts = 10
       interval = "5m"
 
-      # The "delay" parameter specifies the duration to wait before restarting
-      # a task after it has failed.
       delay = "25s"
 
-     # The "mode" parameter controls what happens when a task has restarted
-     # "attempts" times within the interval. "delay" mode delays the next
-     # restart until the next interval. "fail" mode does not restart the task
-     # if "attempts" has been hit within the interval.
       mode = "delay"
     }
 
@@ -85,7 +79,7 @@ job "cluster" {
 
       config {
         image = "seqvence/static-site"
-      
+
         port_map {
             webapp = 80
         }
@@ -118,22 +112,16 @@ job "cluster" {
       }
     }
   }
-  group "elasticsearch" {
-    count = 1
+  group "es" {
+    count = 3
 
     restart {
-      # The number of attempts to run the job within the specified interval.
+
       attempts = 10
       interval = "5m"
 
-      # The "delay" parameter specifies the duration to wait before restarting
-      # a task after it has failed.
       delay = "25s"
 
-     # The "mode" parameter controls what happens when a task has restarted
-     # "attempts" times within the interval. "delay" mode delays the next
-     # restart until the next interval. "fail" mode does not restart the task
-     # if "attempts" has been hit within the interval.
       mode = "delay"
     }
 
@@ -141,13 +129,13 @@ job "cluster" {
       size = 300
     }
 
-    task "webapp" {
+    task "elasticsearch" {
 
       driver = "docker"
 
       config {
         image = "elasticsearch"
-      
+
         port_map {
             elasticsearch = 9300
         }
