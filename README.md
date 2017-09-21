@@ -138,7 +138,12 @@ Execute on the Nomad Server to start the server:
 sudo nomad agent -config server.hcl
 ```
 
-At this point you will need to exit your terminal and ssh again into the instance.
+To avoid exiting the instance or canceling the nomad server being executing, we can use the command ```nohup``` that redirects all the logs to a nohup file insted of showing in the terminal. We add as well the ```&``` for the nomad to run on the background.
+For that we run:
+
+```sh
+nohup sudo nomad agent -config=server.hcl &
+```
 
 ---
 
@@ -200,7 +205,7 @@ ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 Execute on the Nomad Client to start the client:
 
 ```sh
-sudo nomad agent -config client.hcl
+nohup sudo nomad agent -config client.hcl &
 ```
 
 At this point, you will need to exit your terminal and ssh again into the instance.
@@ -406,7 +411,7 @@ ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 
 Execute on the Nomad Client to start the client:
 ```sh
-sudo nomad agent -config client.hcl
+nohup sudo nomad agent -config client.hcl &
 ```
 
 On the Nomad server, run the command to check for the clients:
