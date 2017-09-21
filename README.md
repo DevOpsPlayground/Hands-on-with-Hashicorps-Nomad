@@ -78,18 +78,7 @@ You should get a page like this:
 Since our consul server is ok, we can now ssh into our Nomad server.
 SSH into the server and,
 
-Edit the /etc/sudoers file for nomad have sudo access.
-Change the line ```Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin```
-to 
-```Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin```
-
-Test if you can access nomad with sudo:
-
-```sh
-sudo nomad
-```
-
-If everything is ok, we need to create the server.hcl file. 
+We need to create the server.hcl file. 
 For this we need to use a text editor. For this use case, we used nano.
 
 ```sh
@@ -157,18 +146,7 @@ At this point you will need to exit your terminal and ssh again into the instanc
 
 Doing the same thing for the client,
 
-Edit the /etc/sudoers file for nomad have sudo access.
-Change the line ```Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin```
-to 
-```Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin```
-
-Test if you can access nomad with sudo:
-
-```sh
-sudo nomad
-```
-
-If everything ok, just create the client.hcl file:
+create the client.hcl file:
 
 ```sh
 sudo nano client.hcl
