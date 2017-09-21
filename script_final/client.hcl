@@ -1,6 +1,7 @@
 # The binding IP of our interface
 # Can be found using 
-bind_addr = "CLIENT_INTERNAL_IP"
+# ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
+bind_addr = "172.31.8.222"
 
 # Where all configurations are saved 
 data_dir =  "/home/ubuntu/nomad-config/"
@@ -12,19 +13,19 @@ client =  {
 
     # Server addresses. If we have more than one, we
     # can add them here
-    servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
+    servers = ["172.31.21.156:4647"]
 }
 
 # Where Consul, our service discovery, is listening from.
 consul =  {
-    address =  "CONSUL_INTERNAL_IP:8500"
+    address =  "172.31.24.198:8500"
 }
 
 # Addresses to notify Consul how to find us. 
 # For this client, we are # accessible from 
 # the node-02.local domain
 advertise =  {
-    http =  "CLIENT_INTERNAL_IP"
-    rpc  =  "CLIENT_INTERNAL_IP"
-    serf =  "CLIENT_INTERNAL_IP"
+    http =  "172.31.8.222"
+    rpc  =  "172.31.8.222"
+    serf =  "172.31.8.222"
 }

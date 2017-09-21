@@ -1,5 +1,5 @@
 # The binding IP of our interface
-bind_addr = "SERVER_INTERNAL_IP"
+bind_addr = "172.31.21.156"
 
 # Where all configurations are saved 
 data_dir =  "/tmp/datadir"
@@ -14,20 +14,20 @@ server =  {
     # should be up running. We use only one for our tutorial, but 
     # in production we should have a odd number of instance 
     # running like 3, 5, ...
-    bootstrap_expect =  3
+    bootstrap_expect =  1
 }
 
 # Where Consul, our service discovery, is listening from.
 # For this tutorial, we are installing in the same place that 
 # the Nomad server.
 consul =  {
-    address =  "CONSUL_INTERNAL_IP:8500"
+    address =  "172.31.24.198:8500"
 }
 
 # Addresses to notify Consul how to find us. In this case, we are
 # accessible from the node-01.local domain
 advertise =  {
-    http =  "SERVER_INTERNAL_IP"
-    rpc  =  "SERVER_INTERNAL_IP"
-    serf =  "SERVER_INTERNAL_IP"
+    http =  "172.31.21.156"
+    rpc  =  "172.31.21.156"
+    serf =  "172.31.21.156"
 }
