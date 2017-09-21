@@ -1,10 +1,13 @@
 # DevOps Playground - Nomad
 
-Nomad is a highly available, distributed, data-center aware cluster and application scheduler designed to support the modern datacenter with,
+What is Nomad? 
 
-  - support for long-running services
-  - batch jobs
-  - and much more
+Nomad is a tool for managing highly available and distributed clusters and applications running on the clusters. You can declare your jobs to be run on the clusters, deploy applications and monitor their progress.
+It's simple and built for scale. Supports docker by default.
+
+Since it's a Hashicorp tool, it fully integrates with other Hashicorp tools such as Vault and Consul.
+
+For this lab, we will use Consul as well, to show the integration with Nomad, to monitor and auto-discover the nodes and services.
 
 # Use Case:
 
