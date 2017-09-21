@@ -48,7 +48,8 @@ docker run -p 8500:8500 consul
 To check if it's actually running, go for your browser and put the public ip of your server with the port 8500.
 You should get a page like this:
 
-[consul](/images/base_consul.png)
+![consul]
+(/images/base_consul.png)
 
 Since our consul server is ok, we can now ssh into our Nomad server.
 SSH into the server and,
@@ -189,7 +190,8 @@ At this point, you will need to exit your terminal and ssh again into the instan
 
 Now, we can go to the browser and check on consul for our nomad server and clients:
 
-[consul](/images/consul_servers.png)
+![consul]
+(/images/consul_servers.png)
 
 You can see the status of the server and the clients, check if they're responding correctly to the consul server and later on we will come back here to check the services running.
 
