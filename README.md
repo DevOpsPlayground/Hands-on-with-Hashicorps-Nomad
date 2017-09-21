@@ -14,7 +14,7 @@ In this use case you will perform the following steps:
 
   [1. **Set up our environment**](#1)
 
-    [1.1. Consul Server](#1.1)
+    1.1. [Consul Server](#1.1)
 
     [1.2. Nomad Server](#1.2)
 
