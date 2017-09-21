@@ -2,7 +2,7 @@ job "webapp" {
 
   datacenters = ["DATACENTER"]
 
-  type = "service"
+  type = "SERVICE"
 
   update {
     stagger = "10s"
