@@ -5,9 +5,9 @@ usermod -a -G docker ec2-user
 service docker start
 chkconfig docker on
 
-curl -O https://releases.hashicorp.com/nomad/0.5.6/nomad_0.5.6_linux_amd64.zip
-unzip nomad_0.5.6_linux_amd64.zip
-rm -f nomad_0.5.6_linux_amd64.zip
+curl -O https://releases.hashicorp.com/nomad/0.6.3/nomad_0.6.3_linux_amd64.zip
+unzip nomad_0.6.3_linux_amd64.zip
+rm -f nomad_0.6.3_linux_amd64.zip
 mv nomad /usr/local/bin
 
 curl -O https://releases.hashicorp.com/consul/0.8.5/consul_0.8.5_linux_amd64.zip
