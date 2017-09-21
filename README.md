@@ -86,57 +86,46 @@ SSH into the server and,
 
 We need to create the server.hcl file. 
 For this we need to use a text editor. For this use case, we used nano.
+You can find the file here on Github in Scripts folder.
 
 ```sh
 sudo nano server.hcl
 ```
 
-Content to put server.hcl file:
+For the field ```SERVER_INTERNAL_IP``` just put the internal IP's of your Nomad server
 
 ```sh
-# The binding IP of our interface
 bind_addr = "SERVER_INTERNAL_IP"
-
-# Where all configurations are saved 
-data_dir =  "/tmp/datadir"
-datacenter =  "dc1"
-
-# Act as server. We will use this node to communicate with Nomad
-# from other machines.
-server =  {
-    enabled =  true
-
-    # The bootstrap_expected define how many Nomad server instances 
-    # should be up running. We use only one for our tutorial, but 
-    # in production we should have a odd number of instance 
-    # running like 3, 5, ...
-    bootstrap_expect =  3
-}
-
-# Where Consul, our service discovery, is listening from.
-# For this tutorial, we are installing in the same place that 
-# the Nomad server.
-consul =  {
-    address =  "CONSUL_INTERNAL_IP:8500"
-}
-
-# Addresses to notify Consul how to find us. In this case, we are
-# accessible from the node-01.local domain
-advertise =  {
-    http =  "SERVER_INTERNAL_IP"
-    rpc  =  "SERVER_INTERNAL_IP"
-    serf =  "SERVER_INTERNAL_IP"
-}
 ```
-
-On the field ```bootstrap_expect``` the current value is 3 since on production exists more than one nomad server. For this use case, put the value as ```1``` since we need our server to be the leader.
-
-For the fields ```SERVER_INTERNAL_IP``` and ```CONSUL_INTERNAL_IP```, just put the internal IP's of your Nomad and Consul servers.
 
 To get the actual server's internal IP you can run this command:
 
 ```
 ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
+```
+
+On the field ```bootstrap_expect``` the current value is 3 since on production exists more than one nomad server. For this use case, put the value as ```1``` since we need our server to be the leader.
+
+```sh
+bootstrap_expect =  3
+```
+
+For the field ```CONSUL_INTERNAL_IP``` just put the internal IP's of your Consul server
+
+```sh
+consul =  {
+    address =  "CONSUL_INTERNAL_IP:8500"
+}
+```
+
+For the field ```SERVER_INTERNAL_IP``` just put the internal IP's of your Nomad server
+
+```sh
+advertise =  {
+    http =  "SERVER_INTERNAL_IP"
+    rpc  =  "SERVER_INTERNAL_IP"
+    serf =  "SERVER_INTERNAL_IP"
+}
 ```
 
 Execute on the Nomad Server to start the server:
@@ -163,49 +152,43 @@ create the client.hcl file:
 sudo nano client.hcl
 ```
 
-Content of the client.hcl file:
+As before you can find the content of the client.hcl in the Scripts folder.
+
+For the field ```CLIENT_INTERNAL_IP``` just put the internal IP's of your client server
 
 ```sh
-# The binding IP of our interface
-# Can be found using 
 bind_addr = "CLIENT_INTERNAL_IP"
-
-# Where all configurations are saved 
-data_dir =  "/home/ubuntu/nomad-config/"
-datacenter =  "dc1"
-
-# Act as client and communicate with the server one
-client =  {
-    enabled =  true
-
-    # Server addresses. If we have more than one, we
-    # can add them here
-    servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
-}
-
-# Where Consul, our service discovery, is listening from.
-consul =  {
-    address =  "CONSUL_INTERNAL_IP:8500"
-}
-
-# Addresses to notify Consul how to find us. 
-# For this client, we are # accessible from 
-# the node-02.local domain
-advertise =  {
-    http =  "CLIENT_INTERNAL_IP"
-    rpc  =  "CLIENT_INTERNAL_IP"
-    serf =  "CLIENT_INTERNAL_IP"
-}
-
 ```
-
-Like has been done before for the Nomad server, 
-For the fields ```CLIENT_INTERNAL_IP``` , ```CONSUL_INTERNAL_IP``` and ```NOMAD_INTERNAL_IP``` just put the internal IP's of your Nomad and Consul servers.
 
 Same as before, to get the actual client's internal IP you can run this command:
 
 ```
 ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
+```
+
+
+For the field ```NOMAD_SERVER_INTERNAL_IP``` just put the internal IP's of your Nomad server
+
+```sh
+    servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
+```
+
+For the field ```CONSUL_INTERNAL_IP``` just put the internal IP's of your Consul server
+
+```sh
+consul =  {
+    address =  "CONSUL_INTERNAL_IP:8500"
+}
+```
+
+For the field ```CLIENT_INTERNAL_IP``` just put the internal IP's of your client server
+
+```sh
+advertise =  {
+    http =  "CLIENT_INTERNAL_IP"
+    rpc  =  "CLIENT_INTERNAL_IP"
+    serf =  "CLIENT_INTERNAL_IP"
+}
 ```
 
 Execute on the Nomad Client to start the client:
