@@ -121,7 +121,7 @@ sudo nomad agent -config server.hcl
 
 At this point you will need to exit your terminal and ssh again into the instance.
 
-Doing the same thing for the 2 clients,
+Doing the same thing for the client,
 
 Edit the /etc/sudoers file for nomad have sudo access.
 Change the line ```Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin```
@@ -321,39 +321,52 @@ Apply the client.hcl as before:
 client.hcl file:
 
 ```sh
-# Increase log verbosity
-log_level = "DEBUG"
+# The binding IP of our interface
+# Can be found using 
+# ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
+bind_addr = "CLIENT_INTERNAL_IP"
 
-# Setup data dir
-data_dir = "/tmp/client1"
+# Where all configurations are saved 
+data_dir =  "/home/ubuntu/nomad-config/"
+datacenter =  "dc1"
 
-# Enable the client
-client {
-    enabled = true
+# Act as client and communicate with the server one
+client =  {
+    enabled =  true
 
-    # For demo assume we are talking to server1. For production,
-    # this should be like "nomad.service.consul:4647" and a system
-    # like Consul used for service discovery.
-    servers = ["SERVER_IP:4647"]
+    # Server addresses. If we have more than one, we
+    # can add them here
+    servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
 }
 
-# Modify our port to avoid a collision with server1
-ports {
-    http = 5656
+# Where Consul, our service discovery, is listening from.
+consul =  {
+    address =  "CONSUL_INTERNAL_IP:8500"
 }
+
+# Addresses to notify Consul how to find us. 
+# For this client, we are # accessible from 
+# the node-02.local domain
+advertise =  {
+    http =  "CLIENT_INTERNAL_IP"
+    rpc  =  "CLIENT_INTERNAL_IP"
+    serf =  "CLIENT_INTERNAL_IP"
+}
+
 ```
 
-On the field ```servers = ["SERVER_IP:4647"]```, just substitute the SERVER_IP with the actual Nomad server IP as been done before.
+Like has been done before for the Nomad server, 
+For the fields ```CLIENT_INTERNAL_IP``` , ```CONSUL_INTERNAL_IP``` and ```NOMAD_INTERNAL_IP``` just put the internal IP's of your Nomad and Consul servers.
 
 Execute on the Nomad Client to start the client:
 ```sh
-nomad agent -config client.hcl
+sudo nomad agent -config client.hcl
 ```
 
 On the Nomad server, run the command to check for the clients:
 
 ```sh
-nomad node-status
+sudo nomad node-status
 ```
 
 On the server, you have the webapp.nomad job file like this:
@@ -726,15 +739,15 @@ job "cluster" {
 
 Run the cluster job:
 ```sh
-nomad run cluster.nomad
+sudo nomad run cluster.nomad
 ```
 
 Check the status of the job:
 ```sh
-nomad status cluster
+sudo nomad status cluster
 ```
 
 Check the resource allocation:
 ```sh
-nomad alloc-status ALLOC_ID
+sudo nomad alloc-status ALLOC_ID
 ```
