@@ -12,33 +12,33 @@ In order for you to get in touch with nomad, we prepared a use case.
 
 In this use case you will perform the following steps:
 
-  1. **[Set up our environment]**(#1)
+  [1. **Set up our environment**](#1)
 
-    1.1. [Consul Server](#1.1)
+    [1.1. Consul Server](#1.1)
 
-    1.2. [Nomad Server](#1.2)
+    [1.2. Nomad Server](#1.2)
 
-    1.3. [Nomad Client](#1.3)
+    [1.3. Nomad Client](#1.3)
 
-  2. **Web APP Job**(#2)
+  [2. **Web APP Job**](#2)
 
-    2.1. [Generate job file](#2.1)
+    [2.1. Generate job file](#2.1)
 
-    2.2. [Update the job file](#2.2)
+    [2.2. Update the job file](#2.2)
 
-    2.3. [Run the job file](#2.3)
+    [2.3. Run the job file](#2.3)
 
-    2.4. [Check status and allocation](#2.4)
+    [2.4. Check status and allocation](#2.4)
 
-  3. **Cluster Job**(#3)
+  [3. **Cluster Job**](#3)
 
-    3.1. [Add one more instance](#3.1)
+    [3.1. Add one more instance](#3.1)
 
-    3.2. [Update the job file](#3.2)
+    [3.2. Update the job file](#3.2)
 
-    3.3. [Run the job file](#3.3)
+    [3.3. Run the job file](#3.3)
 
-    3.4. [Check status and allocation](#3.4)
+    [3.4. Check status and allocation](#3.4)
 
 
 ## 1. Set up our environment<a name="1"></a>
