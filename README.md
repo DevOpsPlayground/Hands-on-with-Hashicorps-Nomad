@@ -7,7 +7,7 @@ It's simple and built for scale. Supports docker by default.
 
 Since it's a Hashicorp tool, it fully integrates with other Hashicorp tools such as Vault and Consul.
 
-For this lab, we will use Consul as well, to show the integration with Nomad, to monitor and auto-discover the nodes and services.
+For this use case, we will use Consul as well, to show the integration with Nomad, to monitor and auto-discover the nodes and services.
 
 # Use Case:
 
