@@ -27,13 +27,13 @@ job "webapp" {
 
     task "webapp" {
 
-      driver = "docker"
+      driver = "DRIVER"
 
       config {
         image = "DOCKER_IMAGE"
 
         port_map {
-            webapp = 80
+            webapp = HTTP_PORT
         }
       }
 
