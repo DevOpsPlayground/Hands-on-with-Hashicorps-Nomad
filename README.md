@@ -138,6 +138,12 @@ On the field ```bootstrap_expect``` the current value is 3 since on production e
 
 For the fields ```SERVER_INTERNAL_IP``` and ```CONSUL_INTERNAL_IP```, just put the internal IP's of your Nomad and Consul servers.
 
+To get the actual server's internal IP you can run this command:
+
+```
+ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
+```
+
 Execute on the Nomad Server to start the server:
 ```sh
 sudo nomad agent -config server.hcl
@@ -173,7 +179,6 @@ Content of the client.hcl file:
 ```sh
 # The binding IP of our interface
 # Can be found using 
-# ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 bind_addr = "CLIENT_INTERNAL_IP"
 
 # Where all configurations are saved 
@@ -207,6 +212,12 @@ advertise =  {
 
 Like has been done before for the Nomad server, 
 For the fields ```CLIENT_INTERNAL_IP``` , ```CONSUL_INTERNAL_IP``` and ```NOMAD_INTERNAL_IP``` just put the internal IP's of your Nomad and Consul servers.
+
+Same as before, to get the actual client's internal IP you can run this command:
+
+```
+ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
+```
 
 Execute on the Nomad Client to start the client:
 
@@ -408,6 +419,12 @@ advertise =  {
 
 Like has been done before for the Nomad server, 
 For the fields ```CLIENT_INTERNAL_IP``` , ```CONSUL_INTERNAL_IP``` and ```NOMAD_INTERNAL_IP``` just put the internal IP's of your Nomad and Consul servers.
+
+Like before, To get the actual client's internal IP you can run this command:
+
+```
+ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
+```
 
 Execute on the Nomad Client to start the client:
 ```sh
