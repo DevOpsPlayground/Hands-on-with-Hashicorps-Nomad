@@ -95,10 +95,10 @@ You should get a page like this:
 
 ### 1.2. Nomad Server<a name="1.2"></a>
 
-Since our consul server is ok, we can now ssh into our Nomad server.
-SSH into the server and,
+Since our consul server is all configured, we can now ssh into our Nomad server.
 
-We need to create the server.hcl file. 
+SSH into the server and we need to create the server.hcl file that serves as configuration for nomad.
+
 For this we need to use a text editor. For this use case, we used nano.
 You can find the file here on Github in Scripts folder.
 
