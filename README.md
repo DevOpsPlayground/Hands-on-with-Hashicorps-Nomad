@@ -12,6 +12,18 @@ Since it's a Hashicorp tool, it fully integrates with other Hashicorp tools such
 
 For this use case, we will use Consul as well, to show the integration with Nomad, to monitor and auto-discover the nodes and services.
 
+Other tools / technologies used in this use case:
+
+* Docker - Container technology that allow to package applications with all it's dependencies in order to be run on any server.
+
+![docker]
+(/images/docker.png)
+
+* Amazon Web Services - 
+
+![aws]
+(/images/aws.png)
+
 # Use Case:
 
 In order for you to get in touch with nomad, we prepared a use case.
