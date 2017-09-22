@@ -52,6 +52,8 @@ In this use case you will perform the following steps:
     [3.3. Run the job file](#3.3)
 
     [3.4. Check status and allocation](#3.4)
+    
+    [3.5. Check the services on Consul](#3.5)
 
 
 ## 1. Set up our environment<a name="1"></a>
@@ -567,7 +569,7 @@ and add as well a elasticsearch service:
 
 For the field ```VALUE``` put the value of ```3``` to create 3 services on the cluster.
 
-For the field ```IMAGE``` put the value of ```elasticsearch'`` to use a docker image of elasticsearch search engine.
+For the field ```IMAGE``` put the value of ```elasticsearch``` to use a docker image of elasticsearch search engine.
 
 For the field ```PORT``` put the value of ```9300``` to use port 9300 for elasticsearch access.
 
@@ -774,7 +776,7 @@ sudo nomad alloc-status ALLOC_ID
 ```
 
 
-### 3.5. Check the services on Consul
+### 3.5. Check the services on Consul<a name="3.5"></a>
 
 Go back your browser and go for the consul address.
 Now we can see our Nomad server, clients and all the services deployed on the clients.
