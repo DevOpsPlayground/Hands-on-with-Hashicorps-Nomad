@@ -211,8 +211,6 @@ Execute on the Nomad Client to start the client:
 nohup sudo nomad agent -config client.hcl &
 ```
 
-At this point, you will need to exit your terminal and ssh again into the instance.
-
 Now, we can go to the browser and check on consul for our nomad server and clients:
 
 ![consul]
@@ -355,6 +353,7 @@ ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 ```
 
 Execute on the Nomad Client to start the client:
+
 ```sh
 nohup sudo nomad agent -config client.hcl &
 ```
