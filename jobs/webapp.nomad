@@ -43,8 +43,8 @@ job "webapp" {
       }
 
       resources {
-        cpu    = 500 # 500 MHz
-        memory = 256 # 256MB
+        cpu    = 500
+        memory = 256
         network {
           mbits = 10
           port "webapp" {}
