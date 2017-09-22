@@ -8,7 +8,7 @@ What is Nomad?
 Nomad is a tool for managing highly available and distributed clusters and applications running on the clusters. You can declare your jobs to be run on the clusters, deploy applications and monitor their progress.
 It's simple and built for scale. Supports docker by default.
 
-Since it's a Hashicorp tool, it fully integrates with other Hashicorp tools such as Vault and Consul.
+Since it's a Hashicorp tool, it fully integrates with other Hashicorp tools such as Vault and Consul without too many configurations.
 
 For this use case, we will use Consul as well, to show the integration with Nomad, to monitor and auto-discover the nodes and services.
 
@@ -72,7 +72,10 @@ With windows, use the [Putty](https://the.earth.li/~sgtatham/putty/latest/w64/pu
 
 ### 1.1. Consul Server<a name="1.1"></a>
 
-To monitor our server and clients, lets use a consul server since it interacts automatically with Nomad:
+Why we're going to use Consul and what is Consul?
+
+Consul is service discovery tool made by Hashicorp where you can monitor and check the health of your servers.
+For this use case, we're going to use Consul to monitor our nomad server and clients to be easy to understand what's happening besides just looking at the command-line.
 
 ```sh
 docker run -p 8500:8500 consul
