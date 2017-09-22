@@ -314,45 +314,37 @@ So for this example, we will need 2 more instances to have a cluster of 3 instan
 
 Apply the client.hcl as before:
 
-client.hcl file:
+On the client.hcl file:
+
+For the field ```CLIENT_INTERNAL_IP``` just put the internal IP's of your client server.
 
 ```sh
-# The binding IP of our interface
-# Can be found using 
-# ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 bind_addr = "CLIENT_INTERNAL_IP"
+```
 
-# Where all configurations are saved 
-data_dir =  "/home/ubuntu/nomad-config/"
-datacenter =  "dc1"
+For the field ```NOMAD_SERVER_INTERNAL_IP``` just put the internal IP's of your Nomad server.
 
-# Act as client and communicate with the server one
-client =  {
-    enabled =  true
+```sh
+servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
+```
 
-    # Server addresses. If we have more than one, we
-    # can add them here
-    servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
-}
+For the field ```CONSUL_INTERNAL_IP``` just put the internal IP's of your Consul server.
 
-# Where Consul, our service discovery, is listening from.
+```sh
 consul =  {
     address =  "CONSUL_INTERNAL_IP:8500"
 }
+```
 
-# Addresses to notify Consul how to find us. 
-# For this client, we are # accessible from 
-# the node-02.local domain
+For the field ```CLIENT_INTERNAL_IP``` just put the internal IP's of your client server.
+
+```sh
 advertise =  {
     http =  "CLIENT_INTERNAL_IP"
     rpc  =  "CLIENT_INTERNAL_IP"
     serf =  "CLIENT_INTERNAL_IP"
 }
-
 ```
-
-Like has been done before for the Nomad server, 
-For the fields ```CLIENT_INTERNAL_IP``` , ```CONSUL_INTERNAL_IP``` and ```NOMAD_INTERNAL_IP``` just put the internal IP's of your Nomad and Consul servers.
 
 Like before, To get the actual client's internal IP you can run this command:
 
@@ -375,7 +367,7 @@ sudo nomad node-status
 
 ### 3.2. Update the job file<a name="3.2"></a>
 
-On the server, you have the webapp.nomad job file like this:
+On the Nomad server, you have the webapp.nomad job file like this:
 
 ```sh
 job "cluster" {
@@ -426,8 +418,8 @@ job "cluster" {
       }
 
       resources {
-        cpu    = 500 # 500 MHz
-        memory = 256 # 256MB
+        cpu    = 500
+        memory = 256 
         network {
           mbits = 10
           port "webapp" {}
@@ -458,7 +450,7 @@ Just add a database to the job file:
 
 ```sh
 group "db" {
-    count = 3
+    count = VALUE
 
     restart {
       attempts = 10
@@ -475,15 +467,15 @@ group "db" {
       driver = "docker"
 
       config {
-        image = "redis:3.2"
+        image = "IMAGE"
         port_map {
-          db = 6379
+          db = PORT
         }
       }
 
       resources {
-        cpu    = 500 # 500 MHz
-        memory = 256 # 256MB
+        cpu    = 500
+        memory = 256
         network {
           mbits = 10
           port "db" {}
@@ -505,11 +497,18 @@ group "db" {
   }
 ```
 
+For the field ```VALUE``` put the value of ```3``` to create 3 services on the cluster.
+
+For the field ```IMAGE``` put the value of ```redis:3.2``` to use a docker image of Redis database.
+
+For the field ```PORT``` put the value of ```6379``` to use port 6379 as access to the database.
+
+
 and add as well a elasticsearch service:
 
 ```sh
   group "elasticsearch" {
-    count = 3
+    count = VALUE
 
     restart {
 
@@ -530,10 +529,10 @@ and add as well a elasticsearch service:
       driver = "docker"
 
       config {
-        image = "elasticsearch"
+        image = "IMAGE"
       
         port_map {
-            elasticsearch = 9300
+            elasticsearch = PORT
         }
       }
 
@@ -543,8 +542,8 @@ and add as well a elasticsearch service:
       }
 
       resources {
-        cpu    = 500 # 500 MHz
-        memory = 256 # 256MB
+        cpu    = 500
+        memory = 256
         network {
           mbits = 10
           port "elasticsearch" {}
@@ -565,6 +564,13 @@ and add as well a elasticsearch service:
     }
   }
 ```
+
+For the field ```VALUE``` put the value of ```3``` to create 3 services on the cluster.
+
+For the field ```IMAGE``` put the value of ```elasticsearch'`` to use a docker image of elasticsearch search engine.
+
+For the field ```PORT``` put the value of ```9300``` to use port 9300 for elasticsearch access.
+
 
 After adding this, your file will look like this (in this case a new file was created and saved with the same cluster.nomad):
 
@@ -606,8 +612,8 @@ job "cluster" {
       }
 
       resources {
-        cpu    = 500 # 500 MHz
-        memory = 256 # 256MB
+        cpu    = 500
+        memory = 256
         network {
           mbits = 10
           port "db" {}
@@ -662,8 +668,8 @@ job "cluster" {
       }
 
       resources {
-        cpu    = 500 # 500 MHz
-        memory = 256 # 256MB
+        cpu    = 500
+        memory = 256
         network {
           mbits = 10
           port "webapp" {}
@@ -718,8 +724,8 @@ job "cluster" {
       }
 
       resources {
-        cpu    = 500 # 500 MHz
-        memory = 256 # 256MB
+        cpu    = 500
+        memory = 256
         network {
           mbits = 10
           port "elasticsearch" {}
@@ -741,6 +747,8 @@ job "cluster" {
   }
 }
 ```
+
+You can find this full version of the file in the Jobs folder here on Git.
 
 ---
 
@@ -764,3 +772,9 @@ Check the resource allocation:
 ```sh
 sudo nomad alloc-status ALLOC_ID
 ```
+
+
+### 3.5. Check the services on Consul
+
+Go back your browser and go for the consul address.
+Now we can see our Nomad server, clients and all the services deployed on the clients.
