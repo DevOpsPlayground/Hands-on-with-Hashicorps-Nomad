@@ -62,6 +62,14 @@ All the AWS instances with nomad will be provided pre-configured with nomad and 
 
 You will need to SSH to the Consul server,Nomad server and client assigned to you.
 
+A key will be assign to you for access the instances.
+
+After downloading the key, you will need to change the file permissions.
+
+```sh
+chmod 400 NomadKey.key
+```
+
 With OSX/Linux:
 
 ```sh
