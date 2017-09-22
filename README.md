@@ -244,7 +244,14 @@ On the field ```datacenters = ["DATACENTER"]``` substitute the variable DATACENT
 datacenters = ["DATACENTER"]
 ```
 
-On the field ```type = "SERVICE"``` substitute the variable SERVICE with the type of service job that you're going to execute. In this case is called ```service```
+On the field ```type = "SERVICE"``` substitute the variable SERVICE with the type of service job that you're going to execute. 
+Nomad defines three types: 
+
+* Service: scheduling long lived services that should never go down.
+* Batch: sheduling sensitive to short term performance services and are short lived. 
+* System: sheduling jobs that should be run on all clients that meet the job's constraints.
+
+In this case we're going to use ```service```.
 
 ```sh
 type = "SERVICE"
