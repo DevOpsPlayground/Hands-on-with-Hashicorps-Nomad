@@ -72,7 +72,7 @@ With windows, use the [Putty](https://the.earth.li/~sgtatham/putty/latest/w64/pu
 
 ### 1.1. Consul Server<a name="1.1"></a>
 
-Why we're going to use Consul and what is Consul?
+**Why we're going to use Consul and what is Consul?**
 
 Consul is service discovery tool made by Hashicorp where you can monitor and check the health of your servers.
 For this use case, we're going to use Consul to monitor our nomad server and clients to be easy to understand what's happening besides just looking at the command-line.
