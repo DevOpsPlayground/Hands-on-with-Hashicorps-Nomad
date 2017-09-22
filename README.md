@@ -312,8 +312,9 @@ sudo nomad alloc-status ALLOC_ID
 
 ## 3. Cluster Job<a name="3"></a>
 
-So far, we just had a server and a client as infrastruture but if we want to apply this to a bigger scale, we will have most likely clusters of servers and we will need to apply our jobs to clusters.
+So far, we have a server and a client as infrastruture but if we want to apply a job this to a bigger scale, we will have most likely, clusters of servers and we will need to apply our jobs to the clusters.
 
+So let's add one more instance for nomad use the two clients as a cluster.
 
 ### 3.1. Add one more instance<a name="3.1"></a>
 
@@ -353,7 +354,7 @@ advertise =  {
 }
 ```
 
-Like before, To get the actual client's internal IP you can run this command:
+As been done before, to get the actual client's internal IP you can run this command:
 
 ```
 ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
@@ -365,7 +366,7 @@ Execute on the Nomad Client to start the client:
 nohup sudo nomad agent -config client.hcl &
 ```
 
-On the Nomad server, run the command to check for the clients:
+On the Nomad server, run the command to check the nodes connect to Nomad:
 
 ```sh
 sudo nomad node-status
