@@ -82,7 +82,15 @@ For this use case, we're going to use Consul to monitor our nomad server and cli
 First, we need to ssh into the Consul server and then execute the following command:
 
 ```sh
-sudo docker run -p 8500:8500 consul
+nohup sudo docker run -p 8500:8500 consul &
+```
+
+To avoid exiting the instance or canceling the nomad service, we can use the command ```nohup``` that redirects all the logs to a nohup file insted of showing in the terminal. We add as well the ```&``` for the nomad to run on the background.
+
+If you want to check the logs you can just:
+
+```sh
+cat nohup.out
 ```
 
 To check if it's actually running, go for your browser and put the public ip of your server with the port 8500.
@@ -146,9 +154,6 @@ Execute on the Nomad Server to start the server:
 ```sh
 sudo nomad agent -config server.hcl
 ```
-
-To avoid exiting the instance or canceling the nomad service, we can use the command ```nohup``` that redirects all the logs to a nohup file insted of showing in the terminal. We add as well the ```&``` for the nomad to run on the background.
-For that we run:
 
 ```sh
 nohup sudo nomad agent -config=server.hcl &
