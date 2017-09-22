@@ -107,8 +107,8 @@ Since our consul server is all configured, we can now ssh into our Nomad server.
 
 SSH into the server and we need to create the server.hcl file that serves as configuration for nomad.
 
-For this we need to use a text editor. For this use case, we used nano.
-You can find the file here on Github in Scripts folder.
+For this we need to use a text editor. In this use case,we used nano.
+You can find the server.hcl file here in this repo on the Scripts folder.
 
 ```sh
 sudo nano server.hcl
