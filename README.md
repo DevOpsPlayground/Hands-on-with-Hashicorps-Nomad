@@ -82,7 +82,7 @@ For this use case, we're going to use Consul to monitor our nomad server and cli
 First, we need to ssh into the Consul server and then execute the following command:
 
 ```sh
-docker run -p 8500:8500 consul
+sudo docker run -p 8500:8500 consul
 ```
 
 To check if it's actually running, go for your browser and put the public ip of your server with the port 8500.
