@@ -5,7 +5,7 @@
 
 What is Nomad? 
 
-Nomad is a tool for managing highly available and distributed clusters and applications running on the clusters. You can declare your jobs to be run on the clusters, deploy applications and monitor their progress.
+Nomad is a tool for managing highly available and distributed clusters and applications. You can declare your jobs to be run on the clusters, deploy applications and monitor their progress.
 It's simple and built for scale. Supports docker by default.
 
 Since it's a Hashicorp tool, it fully integrates with other Hashicorp tools such as Vault and Consul without many configurations.
