@@ -16,7 +16,7 @@ Other tools / technologies used in this use case:
 
 * Docker - Container technology that allow to package applications with all it's dependencies in order to be run on any server.
 
-<img src="/images/docker.png" alt="Docker" style="width="100";height="100";"/>
+<img src="/images/docker.png" width="100" height="100">
 
 * Amazon Web Services - 
 
