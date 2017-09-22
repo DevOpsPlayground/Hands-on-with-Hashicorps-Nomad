@@ -118,7 +118,7 @@ To get the actual server's internal IP you can run this command:
 ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 ```
 
-On the field ```bootstrap_expect``` the current value is ```3``` which specifies that exists 3 Nomad servers and one of the servers will need to be elect as leader. For this use case, we put the value as ```1``` since we need our server to be automatically be elect as leader.
+On the field ```bootstrap_expect``` the current value is ```3``` which specifies that exists 3 Nomad servers and one of the servers will need to be elect as leader. For this use case, we change the value to ```1``` since we need our server to be automatically be elect as leader.
 
 ```sh
 bootstrap_expect =  3
