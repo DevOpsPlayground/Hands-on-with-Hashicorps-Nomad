@@ -14,9 +14,9 @@ For this use case, we will use Consul as well, to show the integration with Noma
 
 Other tools / technologies used in this use case:
 
-* Docker - Container technology that allow to package applications with all it's dependencies in order to be run on any server.
+* **Docker** - Container technology that allow to package applications with all it's dependencies in order to be run on any server.
 
-* Amazon Web Services - 
+* **Amazon Web Services** - On-demand cloud computing capabilities, where you have access to virtual clusters of computers and services through the internet.
 
 
 # Use Case:
