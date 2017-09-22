@@ -106,7 +106,7 @@ You can find the file here on Github in Scripts folder.
 sudo nano server.hcl
 ```
 
-For the field ```SERVER_INTERNAL_IP``` just put the internal IP's of your Nomad server
+For the field ```SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server
 
 ```sh
 bind_addr = "SERVER_INTERNAL_IP"
@@ -124,7 +124,7 @@ On the field ```bootstrap_expect``` the current value is ```3``` which specifies
 bootstrap_expect =  3
 ```
 
-For the field ```CONSUL_INTERNAL_IP``` just put the internal IP's of your Consul server
+For the field ```CONSUL_INTERNAL_IP``` place the internal IP's of your Consul server
 
 ```sh
 consul =  {
@@ -132,7 +132,7 @@ consul =  {
 }
 ```
 
-For the field ```SERVER_INTERNAL_IP``` just put the internal IP's of your Nomad server
+For the field ```SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server
 
 ```sh
 advertise =  {
@@ -147,7 +147,7 @@ Execute on the Nomad Server to start the server:
 sudo nomad agent -config server.hcl
 ```
 
-To avoid exiting the instance or canceling the nomad server being executing, we can use the command ```nohup``` that redirects all the logs to a nohup file insted of showing in the terminal. We add as well the ```&``` for the nomad to run on the background.
+To avoid exiting the instance or canceling the nomad service, we can use the command ```nohup``` that redirects all the logs to a nohup file insted of showing in the terminal. We add as well the ```&``` for the nomad to run on the background.
 For that we run:
 
 ```sh
@@ -166,9 +166,9 @@ create the client.hcl file:
 sudo nano client.hcl
 ```
 
-As before you can find the content of the client.hcl in the Scripts folder.
+Like before, you can find the content of the client.hcl in the Scripts folder.
 
-For the field ```CLIENT_INTERNAL_IP``` just put the internal IP's of your client server
+For the field ```CLIENT_INTERNAL_IP``` place the internal IP's of your client server
 
 ```sh
 bind_addr = "CLIENT_INTERNAL_IP"
@@ -181,13 +181,13 @@ ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 ```
 
 
-For the field ```NOMAD_SERVER_INTERNAL_IP``` just put the internal IP's of your Nomad server
+For the field ```NOMAD_SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server
 
 ```sh
     servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
 ```
 
-For the field ```CONSUL_INTERNAL_IP``` just put the internal IP's of your Consul server
+For the field ```CONSUL_INTERNAL_IP``` place the internal IP's of your Consul server
 
 ```sh
 consul =  {
@@ -195,7 +195,7 @@ consul =  {
 }
 ```
 
-For the field ```CLIENT_INTERNAL_IP``` just put the internal IP's of your client server
+For the field ```CLIENT_INTERNAL_IP``` place the internal IP's of your client server
 
 ```sh
 advertise =  {
@@ -323,19 +323,19 @@ Apply the client.hcl as before:
 
 On the client.hcl file:
 
-For the field ```CLIENT_INTERNAL_IP``` just put the internal IP's of your client server.
+For the field ```CLIENT_INTERNAL_IP``` place the internal IP's of your client server.
 
 ```sh
 bind_addr = "CLIENT_INTERNAL_IP"
 ```
 
-For the field ```NOMAD_SERVER_INTERNAL_IP``` just put the internal IP's of your Nomad server.
+For the field ```NOMAD_SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server.
 
 ```sh
 servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
 ```
 
-For the field ```CONSUL_INTERNAL_IP``` just put the internal IP's of your Consul server.
+For the field ```CONSUL_INTERNAL_IP``` place the internal IP's of your Consul server.
 
 ```sh
 consul =  {
@@ -343,7 +343,7 @@ consul =  {
 }
 ```
 
-For the field ```CLIENT_INTERNAL_IP``` just put the internal IP's of your client server.
+For the field ```CLIENT_INTERNAL_IP``` place the internal IP's of your client server.
 
 ```sh
 advertise =  {
@@ -507,11 +507,11 @@ group "db" {
   }
 ```
 
-For the field ```VALUE``` put the value of ```3``` to create 3 services on the cluster.
+For the field ```VALUE``` place the value of ```3``` to create 3 services on the cluster.
 
-For the field ```IMAGE``` put the value of ```redis:3.2``` to use a docker image of Redis database.
+For the field ```IMAGE``` place the value of ```redis:3.2``` to use a docker image of Redis database.
 
-For the field ```PORT``` put the value of ```6379``` to use port 6379 as access to the database.
+For the field ```PORT``` place the value of ```6379``` to use port 6379 as access to the database.
 
 
 and add as well a elasticsearch service:
@@ -575,11 +575,11 @@ and add as well a elasticsearch service:
   }
 ```
 
-For the field ```VALUE``` put the value of ```3``` to create 3 services on the cluster.
+For the field ```VALUE``` place the value of ```3``` to create 3 services on the cluster.
 
-For the field ```IMAGE``` put the value of ```elasticsearch``` to use a docker image of elasticsearch search engine.
+For the field ```IMAGE``` place the value of ```elasticsearch``` to use a docker image of elasticsearch search engine.
 
-For the field ```PORT``` put the value of ```9300``` to use port 9300 for elasticsearch access.
+For the field ```PORT``` place the value of ```9300``` to use port 9300 for elasticsearch access.
 
 
 After adding this, your file will look like this (in this case a new file was created and saved with the same cluster.nomad):
