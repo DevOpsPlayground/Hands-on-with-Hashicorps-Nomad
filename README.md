@@ -90,7 +90,7 @@ For this use case, we're going to use Consul to monitor our nomad server and cli
 First, we need to ssh into the Consul server and then execute the following command:
 
 ```sh
-nohup sudo docker run -p 8500:8500 consul &
+nohup sudo docker run -p 8500:8500 consul > consul_logs &
 ```
 
 To avoid exiting the instance or canceling the nomad service, we can use the command ```nohup``` that redirects all the logs to a nohup file insted of showing in the terminal. We add as well the ```&``` for the nomad to run on the background.
@@ -159,12 +159,9 @@ advertise =  {
 ```
 
 Execute on the Nomad Server to start the server:
-```sh
-sudo nomad agent -config server.hcl
-```
 
 ```sh
-nohup sudo nomad agent -config=server.hcl &
+nohup sudo nomad agent -config=server.hcl > nomad_logs&
 ```
 
 ---
@@ -221,7 +218,7 @@ advertise =  {
 Execute on the Nomad Client to start the client:
 
 ```sh
-nohup sudo nomad agent -config client.hcl &
+nohup sudo nomad agent -config client.hcl > nomad_logs &
 ```
 
 Now, we can go to the browser and check on consul for our nomad server and clients:
@@ -376,7 +373,7 @@ ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 Execute on the Nomad Client to start the client:
 
 ```sh
-nohup sudo nomad agent -config client.hcl &
+nohup sudo nomad agent -config client.hcl > nomad_logs &
 ```
 
 On the Nomad server, run the command to check the nodes connect to Nomad:
