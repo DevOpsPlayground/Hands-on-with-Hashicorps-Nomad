@@ -118,7 +118,7 @@ To get the actual server's internal IP you can run this command:
 ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 ```
 
-On the field ```bootstrap_expect``` the current value is 3 since on production exists more than one nomad server. For this use case, put the value as ```1``` since we need our server to be the leader.
+On the field ```bootstrap_expect``` the current value is ```3``` which specifies that exists 3 Nomad servers and one of the servers will need to be elect as leader. For this use case, we put the value as ```1``` since we need our server to be automatically be elect as leader.
 
 ```sh
 bootstrap_expect =  3
@@ -238,7 +238,7 @@ This will generate the job example file.
 
 ### 2.2. Update the job file<a name="2.2"></a>
 
-Edit the example.nomad and change the file to this and save as webapp.nomad:
+Edit the example.nomad, open the webapp.nomad file in Jobs folder here in Git and copy the content of webapp.nomad to your example.nomad on the Nomad server.
 
 On the field ```datacenters = ["DATACENTER"]``` substitute the variable DATACENTER with the datacenter specified in the server.hcl. (if it wasn't changed, it is ```dc1```)
 
@@ -372,7 +372,7 @@ sudo nomad node-status
 On the Nomad server, you have the webapp.nomad job file like this:
 
 ```sh
-job "cluster" {
+job "webapp" {
   region = "global"
 
   datacenters = ["dc1"]
@@ -445,6 +445,8 @@ job "cluster" {
 ```
 
 Add the ```count = 3``` below the group for the job tasks be scaled to 3 instances.
+
+Change the name on ```job "webapp"``` for ```job "cluster"``` since is going to be a new job.
 
 Now we are adding two more services to the job, a database and a elasticsearch instance.
 
