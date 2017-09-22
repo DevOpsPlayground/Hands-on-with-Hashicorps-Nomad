@@ -22,7 +22,7 @@ consul =  {
 
 # Addresses to notify Consul how to find us. 
 # For this client, we are # accessible from 
-# the node-02.local domain
+# the CLIENT_INTERNAL_IP
 advertise =  {
     http =  "CLIENT_INTERNAL_IP"
     rpc  =  "CLIENT_INTERNAL_IP"

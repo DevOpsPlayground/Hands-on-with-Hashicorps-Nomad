@@ -23,7 +23,7 @@ consul =  {
 
 # Addresses to notify Consul how to find us. 
 # For this client, we are # accessible from 
-# the node-02.local domain
+# the 172.31.8.222
 advertise =  {
     http =  "172.31.8.222"
     rpc  =  "172.31.8.222"

@@ -1,7 +1,7 @@
 job "webapp" {
-
+  # Datacenter specified on Nomad servers and clients
   datacenters = ["DATACENTER"]
-
+  # Type of the job (could be service,batch or system)
   type = "SERVICE"
 
   update {
@@ -25,13 +25,14 @@ job "webapp" {
       size = 300
     }
 
+    # Defines the task to be executed
     task "webapp" {
-
+      # The driver used for the image
       driver = "DRIVER"
-
+      # The image we want to use for deployment
       config {
         image = "DOCKER_IMAGE"
-
+        # The port exposed from the container
         port_map {
             webapp = HTTP_PORT
         }
@@ -41,7 +42,7 @@ job "webapp" {
         max_files     = 10
         max_file_size = 15
       }
-
+      # Memory resources for this 
       resources {
         cpu    = 500
         memory = 256
@@ -50,7 +51,7 @@ job "webapp" {
           port "webapp" {}
         }
       }
-
+      # Act as service with health checks
       service {
         name = "global-webapp-check"
         tags = ["global", "webs"]

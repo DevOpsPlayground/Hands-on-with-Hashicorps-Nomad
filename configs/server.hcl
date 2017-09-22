@@ -18,14 +18,13 @@ server =  {
 }
 
 # Where Consul, our service discovery, is listening from.
-# For this tutorial, we are installing in the same place that 
-# the Nomad server.
+
 consul =  {
     address =  "CONSUL_INTERNAL_IP:8500"
 }
 
 # Addresses to notify Consul how to find us. In this case, we are
-# accessible from the node-01.local domain
+# accessible from the SERVER_INTERNAL_IP
 advertise =  {
     http =  "SERVER_INTERNAL_IP"
     rpc  =  "SERVER_INTERNAL_IP"

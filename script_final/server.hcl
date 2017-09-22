@@ -18,14 +18,13 @@ server =  {
 }
 
 # Where Consul, our service discovery, is listening from.
-# For this tutorial, we are installing in the same place that 
-# the Nomad server.
+
 consul =  {
     address =  "172.31.24.198:8500"
 }
 
 # Addresses to notify Consul how to find us. In this case, we are
-# accessible from the node-01.local domain
+# accessible from the 172.31.21.156
 advertise =  {
     http =  "172.31.21.156"
     rpc  =  "172.31.21.156"
