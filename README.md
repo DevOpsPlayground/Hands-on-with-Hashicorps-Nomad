@@ -64,7 +64,7 @@ You will need to SSH to the Consul server,Nomad server and client assigned to yo
 
 A key will be assign to you for access the instances.
 
-After downloading the key, you will need to change the file permissions.
+After downloading the key, you will need to change the key file permissions to be readable by SSH.
 
 ```sh
 chmod 400 NomadKey.key
@@ -90,7 +90,7 @@ For this use case, we're going to use Consul to monitor our nomad server and cli
 First, we need to ssh into the Consul server and then execute the following command:
 
 ```sh
-nohup sudo docker run -p 8500:8500 consul > consul_logs &
+nohup sudo docker run -p 8500:8500 consul > consul_logs&
 ```
 
 To avoid exiting the instance or canceling the nomad service, we can use the command ```nohup``` that redirects all the logs to a nohup file insted of showing in the terminal. We add as well the ```&``` for the nomad to run on the background.
@@ -98,7 +98,7 @@ To avoid exiting the instance or canceling the nomad service, we can use the com
 If you want to check the logs you can just:
 
 ```sh
-cat nohup.out
+cat consul_logs
 ```
 
 To check if it's actually running, go for your browser and put the public ip of your server with the port 8500.
@@ -122,13 +122,9 @@ You can find the server.hcl file here in this repo on the Scripts folder.
 sudo nano server.hcl
 ```
 
-For the field ```SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server
-
-```sh
-bind_addr = "SERVER_INTERNAL_IP"
 ```
 
-To get the actual server's internal IP you can run this command:
+To get the actual consul server's internal IP you can run this command on consul instance:
 
 ```
 ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
@@ -148,16 +144,6 @@ consul =  {
 }
 ```
 
-For the field ```SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server
-
-```sh
-advertise =  {
-    http =  "SERVER_INTERNAL_IP"
-    rpc  =  "SERVER_INTERNAL_IP"
-    serf =  "SERVER_INTERNAL_IP"
-}
-```
-
 Execute on the Nomad Server to start the server:
 
 ```sh
@@ -174,14 +160,6 @@ create the client.hcl file:
 
 ```sh
 sudo nano client.hcl
-```
-
-Like before, you can find the content of the client.hcl in the Scripts folder.
-
-For the field ```CLIENT_INTERNAL_IP``` place the internal IP's of your client server
-
-```sh
-bind_addr = "CLIENT_INTERNAL_IP"
 ```
 
 Same as before, to get the actual client's internal IP you can run this command:
@@ -205,20 +183,10 @@ consul =  {
 }
 ```
 
-For the field ```CLIENT_INTERNAL_IP``` place the internal IP's of your client server
-
-```sh
-advertise =  {
-    http =  "CLIENT_INTERNAL_IP"
-    rpc  =  "CLIENT_INTERNAL_IP"
-    serf =  "CLIENT_INTERNAL_IP"
-}
-```
-
 Execute on the Nomad Client to start the client:
 
 ```sh
-nohup sudo nomad agent -config client.hcl > nomad_logs &
+nohup sudo nomad agent -config client.hcl > nomadclient_logs&
 ```
 
 Now, we can go to the browser and check on consul for our nomad server and clients:
@@ -240,13 +208,19 @@ Let's go back to our Nomad Server and do:
 sudo nomad init
 ```
 
-This will generate the job example file.
+This will generate the a job example file.
+
+For the use case, you can find your webapp.nomad already on the instance, so just keep in mind if you don't have job file, you can generate one.
 
 ---
 
 ### 2.2. Update the job file<a name="2.2"></a>
 
-Edit the example.nomad, open the webapp.nomad file in Jobs folder here in Git and copy the content of webapp.nomad to your example.nomad on the Nomad server.
+Edit the webapp.nomad with a text editor.
+
+```sh
+sudo nano webapp.nomad
+```
 
 On the field ```datacenters = ["DATACENTER"]``` substitute the variable DATACENTER with the datacenter specified in the server.hcl. (if it wasn't changed, it is ```dc1```)
 
@@ -290,13 +264,15 @@ After the file is edited, just execute:
 sudo nomad run webapp.nomad
 ```
 
-After the job is done, just go to the ssh client connection and check for the docker containers running with:
+After the job is done, just go to the nomad client connection and check for the docker containers running with:
 
 ```sh
 sudo docker ps
 ```
 
 You can see the instance ip and port. Just copy and paste it in your browser and should be able to see a webpage.
+Since the docker container uses the private IP of the instance, put the public ip of your instance with the same port as stated on 
+docker ps.
 
 The result will be a page similar to this:
 
@@ -334,12 +310,6 @@ Apply the client.hcl as before:
 
 On the client.hcl file:
 
-For the field ```CLIENT_INTERNAL_IP``` place the internal IP's of your client server.
-
-```sh
-bind_addr = "CLIENT_INTERNAL_IP"
-```
-
 For the field ```NOMAD_SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server.
 
 ```sh
@@ -354,17 +324,7 @@ consul =  {
 }
 ```
 
-For the field ```CLIENT_INTERNAL_IP``` place the internal IP's of your client server.
-
-```sh
-advertise =  {
-    http =  "CLIENT_INTERNAL_IP"
-    rpc  =  "CLIENT_INTERNAL_IP"
-    serf =  "CLIENT_INTERNAL_IP"
-}
-```
-
-As been done before, to get the actual client's internal IP you can run this command:
+As been done before, to get the actual nomad's and consul's internal IP you can run this command:
 
 ```
 ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
@@ -373,7 +333,7 @@ ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 Execute on the Nomad Client to start the client:
 
 ```sh
-nohup sudo nomad agent -config client.hcl > nomad_logs &
+nohup sudo nomad agent -config client.hcl > nomad_logs&
 ```
 
 On the Nomad server, run the command to check the nodes connect to Nomad:
@@ -799,3 +759,12 @@ sudo nomad alloc-status ALLOC_ID
 
 Go back your browser and go for the consul address.
 Now we can see our Nomad server, clients and all the services deployed on the clients.
+
+
+## All done!
+
+I hope that all of you have enjoyed this hands-on with Nomad.
+Any feedback or questions, please send it to my email Daniel@ecs-digital.co.uk
+
+Thank you!
+

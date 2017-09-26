@@ -1,5 +1,5 @@
 # The binding IP of our interface
-bind_addr = "SERVER_INTERNAL_IP"
+bind_addr = "0.0.0.0"
 
 # Where all configurations are saved 
 data_dir =  "/tmp/datadir"
