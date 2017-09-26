@@ -126,7 +126,7 @@ sudo nano server.hcl
 
 To get the actual consul server's internal IP you can run this command on consul instance:
 
-```
+```sh
 ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 ```
 
@@ -162,12 +162,6 @@ create the client.hcl file:
 sudo nano client.hcl
 ```
 
-Same as before, to get the actual client's internal IP you can run this command:
-
-```
-ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
-```
-
 
 For the field ```NOMAD_SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server
 
@@ -181,6 +175,12 @@ For the field ```CONSUL_INTERNAL_IP``` place the internal IP's of your Consul se
 consul =  {
     address =  "CONSUL_INTERNAL_IP:8500"
 }
+```
+
+Same as before, you can get your Nomad server and Consul server internal IP by using this command on their instances:
+
+```
+ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 ```
 
 Execute on the Nomad Client to start the client:
@@ -764,7 +764,7 @@ Now we can see our Nomad server, clients and all the services deployed on the cl
 ## All done!
 
 I hope that all of you have enjoyed this hands-on with Nomad.
-Any feedback or questions, please send it to my email Daniel@ecs-digital.co.uk
+Any feedback or questions, you can contact me on the email Daniel@ecs-digital.co.uk
 
 Thank you!
 
