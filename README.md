@@ -355,29 +355,9 @@ job "webapp" {
   datacenters = ["dc1"]
 
   type = "service"
-
-  update {
-    stagger = "10s"
-    max_parallel = 1
-  }
-
   
   group "webs" {
     count = 3
-
-    restart {
-
-      attempts = 10
-      interval = "5m"
-
-      delay = "25s"
-
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
 
     task "webapp" {
 
@@ -433,17 +413,6 @@ Just add a database to the job file:
 group "db" {
     count = VALUE
 
-    restart {
-      attempts = 10
-      interval = "5m"
-      delay = "25s"
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
-
     task "redis" {
       driver = "docker"
 
@@ -490,20 +459,6 @@ and add as well a elasticsearch service:
 ```sh
   group "elasticsearch" {
     count = VALUE
-
-    restart {
-
-      attempts = 10
-      interval = "5m"
-
-      delay = "25s"
-
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
 
     task "webapp" {
 
@@ -563,24 +518,8 @@ job "cluster" {
 
   type = "service"
 
-  update {
-    stagger = "10s"
-    max_parallel = 1
-  }
-
   group "db" {
     count = 3
-
-    restart {
-      attempts = 10
-      interval = "5m"
-      delay = "25s"
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
 
     task "redis" {
       driver = "docker"
@@ -616,20 +555,6 @@ job "cluster" {
   }
   group "webs" {
     count = 3
-
-    restart {
-
-      attempts = 10
-      interval = "5m"
-
-      delay = "25s"
-
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
 
     task "webapp" {
 
@@ -672,20 +597,6 @@ job "cluster" {
   }
   group "es" {
     count = 3
-
-    restart {
-
-      attempts = 10
-      interval = "5m"
-
-      delay = "25s"
-
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
 
     task "elasticsearch" {
 
