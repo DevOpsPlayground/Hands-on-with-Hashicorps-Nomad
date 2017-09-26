@@ -5,24 +5,9 @@ job "cluster" {
   # Type of the job (could be service,batch or system)
   type = "service"
 
-  update {
-    stagger = "10s"
-    max_parallel = 1
-  }
-
   group "db" {
     count = 3
 
-    restart {
-      attempts = 10
-      interval = "5m"
-      delay = "25s"
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
     # Defines the task to be executed
     task "redis" {
       # The driver used for the image
@@ -35,6 +20,12 @@ job "cluster" {
           db = 6379
         }
       }
+
+      logs {
+        max_files     = 10
+        max_file_size = 15
+      }
+      
       # Memory resources for this 
       resources {
         cpu    = 500
@@ -44,6 +35,7 @@ job "cluster" {
           port "db" {}
         }
       }
+
       # Act as service with health checks
       service {
         name = "global-redis-check"
@@ -61,19 +53,6 @@ job "cluster" {
   group "webs" {
     count = 3
 
-    restart {
-
-      attempts = 10
-      interval = "5m"
-
-      delay = "25s"
-
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
     # Defines the task to be executed
     task "webapp" {
       # The driver used for the image
@@ -92,6 +71,7 @@ job "cluster" {
         max_files     = 10
         max_file_size = 15
       }
+
       # Memory resources for this 
       resources {
         cpu    = 500
@@ -118,19 +98,6 @@ job "cluster" {
   group "es" {
     count = 3
 
-    restart {
-
-      attempts = 10
-      interval = "5m"
-
-      delay = "25s"
-
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
     # Defines the task to be executed
     task "elasticsearch" {
       # The driver used for the image
@@ -145,9 +112,11 @@ job "cluster" {
       }
 
       logs {
+
         max_files     = 10
         max_file_size = 15
       }
+
       # Memory resources for this 
       resources {
         cpu    = 500

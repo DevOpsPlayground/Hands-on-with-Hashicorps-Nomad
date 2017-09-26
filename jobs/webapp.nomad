@@ -4,26 +4,7 @@ job "webapp" {
   # Type of the job (could be service,batch or system)
   type = "SERVICE"
 
-  update {
-    stagger = "10s"
-    max_parallel = 1
-  }
-
   group "webs" {
-
-    restart {
-
-      attempts = 10
-      interval = "5m"
-
-      delay = "25s"
-
-      mode = "delay"
-    }
-
-    ephemeral_disk {
-      size = 300
-    }
 
     # Defines the task to be executed
     task "webapp" {
@@ -42,6 +23,7 @@ job "webapp" {
         max_files     = 10
         max_file_size = 15
       }
+
       # Memory resources for this 
       resources {
         cpu    = 500
