@@ -1,6 +1,6 @@
 job "webapp" {
   # Datacenter specified on Nomad servers and clients
-  datacenters = ["ECSD"]
+  datacenters = ["DATACENTER"]
   # Type of the job (could be service,batch or system)
   type = "SERVICE"
 

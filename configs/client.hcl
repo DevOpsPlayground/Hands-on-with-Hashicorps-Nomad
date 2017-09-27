@@ -4,7 +4,7 @@ bind_addr = "CLIENT_INTERNAL_IP"
 
 # Where all configurations are saved 
 data_dir =  "/home/ubuntu/nomad-config/"
-datacenter =  "ECSD"
+datacenter =  "ecsd"
 
 # Act as client and communicate with the server one
 client =  {

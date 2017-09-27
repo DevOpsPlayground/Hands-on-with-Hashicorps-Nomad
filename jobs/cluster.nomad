@@ -1,7 +1,7 @@
 job "cluster" {
   region = "global"
   # Datacenter specified on Nomad servers and clients
-  datacenters = ["ECSD"]
+  datacenters = ["ecsd"]
   # Type of the job (could be service,batch or system)
   type = "service"
 

@@ -220,7 +220,7 @@ Edit the webapp.nomad with a text editor.
 sudo nano webapp.nomad
 ```
 
-On the field ```datacenters = ["DATACENTER"]``` substitute the variable DATACENTER with the datacenter specified in the server.hcl. (if it wasn't changed, it is ```dc1```)
+On the field ```datacenters = ["DATACENTER"]``` substitute the variable DATACENTER with the datacenter specified in the server.hcl. (if it wasn't changed, it is ```ecsd```)
 
 ```sh
 datacenters = ["DATACENTER"]
