@@ -230,7 +230,7 @@ Nomad defines three types:
 In this case we're going to use ```service```.
 
 ```sh
-type = "SERVICE"
+type = "TYPE_SERVICE"
 ```
 
 On the field ```image = "DOCKER_IMAGE"``` substitute the variable DOCKER_IMAGE with the image we need to use to have the web application -> ```seqvence/static-site``` and substitute the variable HTTP with the http port we going to use ```80```
@@ -241,7 +241,7 @@ config {
    image = "DOCKER_IMAGE"
   
    port_map {
-      webapp = HTTP
+      webapp = HTTP_PORT
    }
 }
 ```
