@@ -1,7 +1,6 @@
 # DevOps Playground - Nomad
 
-![Nomad]
-(https://hyzxph.media.zestyio.com/blog-nomad-list.svg)
+![Nomad](https://hyzxph.media.zestyio.com/blog-nomad-list.svg)
 
 What is Nomad? 
 
@@ -108,8 +107,7 @@ cat consul_logs
 To check if it's actually running, go for your browser and put the public ip of your server with the port 8500.
 You should get a page like this:
 
-![consul]
-(/images/base_consul.png)
+![consul](/images/base_consul.png)
 
 ---
 
@@ -183,8 +181,7 @@ nohup sudo nomad agent -config client.hcl > nomadclient_logs&
 
 Now, we can go to the browser and check on consul for our nomad server and clients:
 
-![consul]
-(/images/consul_servers.png)
+![consul](/images/consul_servers.png)
 
 You can see the status of the server and the clients, check if they're responding correctly to the consul server and later on we will come back here to check the services running.
 
