@@ -122,8 +122,6 @@ You can find the server.hcl file here in this repo on the Scripts folder.
 sudo nano server.hcl
 ```
 
-```
-
 To get the actual consul server's internal IP you can run this command on consul instance:
 
 ```sh
