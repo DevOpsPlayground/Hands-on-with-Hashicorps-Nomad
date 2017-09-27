@@ -20,11 +20,6 @@ job "cluster" {
           db = 6379
         }
       }
-
-      logs {
-        max_files     = 10
-        max_file_size = 15
-      }
       
       # Memory resources for this 
       resources {
@@ -67,11 +62,6 @@ job "cluster" {
         }
       }
 
-      logs {
-        max_files     = 10
-        max_file_size = 15
-      }
-
       # Memory resources for this 
       resources {
         cpu    = 500
@@ -109,12 +99,6 @@ job "cluster" {
         port_map {
             elasticsearch = 9300
         }
-      }
-
-      logs {
-
-        max_files     = 10
-        max_file_size = 15
       }
 
       # Memory resources for this 

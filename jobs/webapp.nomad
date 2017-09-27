@@ -19,11 +19,6 @@ job "webapp" {
         }
       }
 
-      logs {
-        max_files     = 10
-        max_file_size = 15
-      }
-
       # Memory resources for this 
       resources {
         cpu    = 500
