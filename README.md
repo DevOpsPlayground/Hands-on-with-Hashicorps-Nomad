@@ -45,7 +45,7 @@ In this use case you will perform the following steps:
 
   3. **Cluster Job**
 
-    [3.1. Add one more instance](#3.1)
+    [3.1. Add more instances](#3.1)
 
     [3.2. Update the job file](#3.2)
 
