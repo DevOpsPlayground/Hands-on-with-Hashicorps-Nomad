@@ -70,7 +70,7 @@ https://s3-eu-west-1.amazonaws.com/devops-playground-configurations/NomadKey.pem
 After downloading the key, you will need to change the key file permissions to be readable by SSH.
 
 ```sh
-chmod 400 NomadKey.key
+chmod 400 NomadKey.pem
 ```
 
 With OSX/Linux:
