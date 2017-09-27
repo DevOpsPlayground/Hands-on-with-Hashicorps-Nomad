@@ -35,7 +35,7 @@ job "webapp" {
       }
       # Act as service with health checks
       service {
-        name = "global-webapp-check"
+        name = "webapp"
         tags = ["global", "webs"]
         port = "webapp"
         check {

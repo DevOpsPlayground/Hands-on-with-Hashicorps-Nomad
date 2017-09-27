@@ -38,7 +38,7 @@ job "cluster" {
 
       # Act as service with health checks
       service {
-        name = "global-redis-check"
+        name = "redis-database"
         tags = ["global", "db"]
         port = "db"
         check {
@@ -83,7 +83,7 @@ job "cluster" {
       }
       # Act as service with health checks
       service {
-        name = "global-webapp-check"
+        name = "webapp"
         tags = ["global", "webs"]
         port = "webapp"
         check {
@@ -128,7 +128,7 @@ job "cluster" {
       }
       # Act as service with health checks
       service {
-        name = "global-elasticsearch-check"
+        name = "elasticsearch"
         tags = ["global", "elasticsearch"]
         port = "elasticsearch"
         check {
