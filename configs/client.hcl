@@ -20,6 +20,11 @@ consul =  {
     address =  "CONSUL_INTERNAL_IP:8500"
 }
 
+# Changing HTTP port to not collapse with the nomad server
+ports {
+  http = 5656
+}
+
 # Addresses to notify Consul how to find us. 
 # For this client, we are # accessible from 
 # the CLIENT_INTERNAL_IP

@@ -58,11 +58,9 @@ In this use case you will perform the following steps:
 
 ## 1. Set up our environment<a name="1"></a>
 
-All the AWS instances with nomad will be provided pre-configured with nomad and docker.
+For this hands-on, i will run the consul server, Nomad server and Nomad client on the same machine.
 
-You will need to SSH to the Consul server,Nomad server and client assigned to you.
-
-A key will be assign to you for access the instances.
+A key will be assign to you for access the instance.
 
 After downloading the key, you will need to change the key file permissions to be readable by SSH.
 
@@ -111,9 +109,9 @@ You should get a page like this:
 
 ### 1.2. Nomad Server<a name="1.2"></a>
 
-Since our consul server is all configured, we can now ssh into our Nomad server.
+Since our consul server is all configured, we can now configure our Nomad server.
 
-SSH into the server and we need to create the server.hcl file that serves as configuration for nomad.
+The configuration file is already provided. Just check for server.hcl
 
 For this we need to use a text editor. In this use case,we used nano.
 You can find the server.hcl file here in this repo on the Scripts folder.
@@ -122,11 +120,7 @@ You can find the server.hcl file here in this repo on the Scripts folder.
 sudo nano server.hcl
 ```
 
-To get the actual consul server's internal IP you can run this command on consul instance:
-
-```sh
-ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
-```
+All the internal IP'S are already configured by default.
 
 On the field ```bootstrap_expect``` the current value is ```3``` which specifies that exists 3 Nomad servers and one of the servers will need to be elect as leader. For this use case, we change the value to ```1``` since we need our server to be automatically be elect as leader.
 
@@ -134,7 +128,7 @@ On the field ```bootstrap_expect``` the current value is ```3``` which specifies
 bootstrap_expect =  3
 ```
 
-For the field ```CONSUL_INTERNAL_IP``` place the internal IP's of your Consul server
+For the field ```CONSUL_INTERNAL_IP``` place the internal IP's of your Consul server. In this case will be ```127.0.0.1:8500```
 
 ```sh
 consul =  {
@@ -161,24 +155,18 @@ sudo nano client.hcl
 ```
 
 
-For the field ```NOMAD_SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server
+For the field ```NOMAD_SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server. In this case will be ```127.0.0.1:4647```
 
 ```sh
     servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
 ```
 
-For the field ```CONSUL_INTERNAL_IP``` place the internal IP's of your Consul server
+For the field ```CONSUL_INTERNAL_IP``` place the internal IP's of your Consul server. In this case will be ```127.0.0.1:8500```
 
 ```sh
 consul =  {
     address =  "CONSUL_INTERNAL_IP:8500"
 }
-```
-
-Same as before, you can get your Nomad server and Consul server internal IP by using this command on their instances:
-
-```
-ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
 ```
 
 Execute on the Nomad Client to start the client:
@@ -300,45 +288,12 @@ So far, we have a server and a client as infrastruture but if we want to apply a
 
 So let's add one more instance for nomad use the two clients as a cluster.
 
-### 3.1. Add one more instance<a name="3.1"></a>
+### 3.1. Add more instances<a name="3.1"></a>
 
-So for this example, we will need 2 more instances to have a cluster of 3 instances.
+So for this example, we will run the cluster job on the same machine.
+On a real environment, you will have a cluster of instances and the job would spread across those instances.
 
-Apply the client.hcl as before:
-
-On the client.hcl file:
-
-For the field ```NOMAD_SERVER_INTERNAL_IP``` place the internal IP's of your Nomad server.
-
-```sh
-servers = ["NOMAD_SERVER_INTERNAL_IP:4647"]
-```
-
-For the field ```CONSUL_INTERNAL_IP``` place the internal IP's of your Consul server.
-
-```sh
-consul =  {
-    address =  "CONSUL_INTERNAL_IP:8500"
-}
-```
-
-As been done before, to get the actual nomad's and consul's internal IP you can run this command:
-
-```
-ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g'
-```
-
-Execute on the Nomad Client to start the client:
-
-```sh
-nohup sudo nomad agent -config client.hcl > nomad_logs&
-```
-
-On the Nomad server, run the command to check the nodes connect to Nomad:
-
-```sh
-sudo nomad node-status
-```
+To add more machines, just do the same procedure as to create a nomad client. The nomad server will detect the new client and add it to the cluster.
 
 ---
 

@@ -22,3 +22,9 @@ sudo chmod 777 /home/ec2-user/cluster.nomad
 
 sudo sed -i "s/SERVER_INTERNAL_IP/$(ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g')/g" /home/ec2-user/server.hcl
 
+aws s3 cp s3://devops-playground-configurations/configs/client.hcl /home/ec2-user
+
+sudo chmod 777 /home/ec2-user/client.hcl
+
+sudo sed -i "s/CLIENT_INTERNAL_IP/$(ifconfig eth0 | awk '/inet addr/ { print $2}' | sed 's#addr:##g')/g" /home/ec2-user/client.hcl
+
