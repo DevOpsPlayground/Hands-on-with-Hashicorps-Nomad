@@ -3,7 +3,7 @@ bind_addr = "0.0.0.0"
 
 # Where all configurations are saved 
 data_dir =  "/tmp/datadir"
-datacenter =  "dc1"
+datacenter =  "ECSD"
 
 # Act as server. We will use this node to communicate with Nomad
 # from other machines.
