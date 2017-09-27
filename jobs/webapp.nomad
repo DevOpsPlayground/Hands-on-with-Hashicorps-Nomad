@@ -2,7 +2,7 @@ job "webapp" {
   # Datacenter specified on Nomad servers and clients
   datacenters = ["DATACENTER"]
   # Type of the job (could be service,batch or system)
-  type = "SERVICE"
+  type = "TYPE_SERVICE"
 
   group "webs" {
 
