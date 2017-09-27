@@ -345,7 +345,7 @@ job "webapp" {
       }
 
       service {
-        name = "global-webapp-check"
+        name = "webapp"
         tags = ["global", "webs"]
         port = "webapp"
         check {
@@ -392,7 +392,7 @@ group "db" {
       }
 
       service {
-        name = "global-redis-check"
+        name = "redis-database"
         tags = ["global", "db"]
         port = "db"
         check {
@@ -446,7 +446,7 @@ and add as well a elasticsearch service:
       }
 
       service {
-        name = "global-elasticsearch-check"
+        name = "elasticsearch"
         tags = ["global", "elasticsearch"]
         port = "elasticsearch"
         check {
@@ -500,7 +500,7 @@ job "cluster" {
       }
 
       service {
-        name = "global-redis-check"
+        name = "redis-database"
         tags = ["global", "db"]
         port = "db"
         check {
@@ -542,7 +542,7 @@ job "cluster" {
       }
 
       service {
-        name = "global-webapp-check"
+        name = "webapp"
         tags = ["global", "webs"]
         port = "webapp"
         check {
@@ -584,7 +584,7 @@ job "cluster" {
       }
 
       service {
-        name = "global-elasticsearch-check"
+        name = "elasticsearch"
         tags = ["global", "elasticsearch"]
         port = "elasticsearch"
         check {
