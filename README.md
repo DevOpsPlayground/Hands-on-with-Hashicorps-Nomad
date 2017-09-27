@@ -233,10 +233,10 @@ In this case we're going to use ```service```.
 type = "TYPE_SERVICE"
 ```
 
-On the field ```image = "DOCKER_IMAGE"``` substitute the variable DOCKER_IMAGE with the image we need to use to have the web application -> ```seqvence/static-site``` and substitute the variable HTTP with the http port we going to use ```80```
+On the field ```driver = "DRIVER"``` substitute the variable DRIVER with the one we're going to use ```docker```, on```image = "DOCKER_IMAGE"``` substitute the variable DOCKER_IMAGE with the image we need to use to have the web application -> ```seqvence/static-site``` and substitute the variable HTTP with the http port we going to use ```80```
 
 ```sh
-driver = "docker"
+driver = "DRIVER"
 config {
    image = "DOCKER_IMAGE"
   
