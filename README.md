@@ -60,7 +60,13 @@ In this use case you will perform the following steps:
 
 For this hands-on, i will run the consul server, Nomad server and Nomad client on the same machine.
 
-A key will be assign to you for access the instance.
+A key will be needed to access the instance.
+
+You can find the key in the link below.
+
+```sh
+https://s3-eu-west-1.amazonaws.com/devops-playground-configurations/NomadKey.pem
+```
 
 After downloading the key, you will need to change the key file permissions to be readable by SSH.
 
